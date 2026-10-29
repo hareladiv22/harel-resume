@@ -28,7 +28,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - [x] P2.11 Self-hosted fonts
 - [x] P2.12 Safe rendering
 - [x] P2.13 Content Security Policy
-- [ ] ⏸ STOP 2
+- [x] ⏸ STOP 2
 
 ## Phase 3: CV & sharing
 - [ ] P3.1 CV download everywhere
@@ -100,3 +100,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P2.11: fonts self-hosted in public/fonts (Fraunces 600/500i, Space Grotesk 500/700, Latin woff2 from Fontsource 5.3.0 + OFL license files). Deviation: downloaded the files once from jsDelivr instead of tools/copy-fonts.mjs + npm devDependency, so no tool approval needed and nothing installed. @font-face with swap, 2 Fraunces files preloaded; Google Fonts links removed. Tested headless: zero external requests; screenshots before/after identical on slides 1, 2, 5 (9 within anti-aliasing).
 - 2026-10-29 P2.12: esc() + rich() (only <em>, </em>, <br> survive); safeUrl() allows https:, mailto:, tel:, same-site paths; numbers coerced; theme/type checked (bad -> throw -> fallback). Inline style=--i replaced by data-s + style.setProperty; bars --d via CSSOM. Tested headless: injected <img onerror>, <script>, javascript: link -> text / '#', 0 alerts; slides 1 and 5 pixel-identical to before.
 - 2026-10-29 P2.13: CSP from spec added to vercel.json, unchanged. Tested headless with the same header served locally: full click-through (desktop + mobile), copy incl. fallback, fonts, 404 -> zero violations. Re-check with analytics in P4. Preview is behind Vercel login, so Harel confirms the preview at STOP 2.
+- 2026-10-29 STOP 2: Harel approved; phase-2 fast-forwarded into main (8a882d5), production deploy green. Production click-through (desktop + mobile) with real Vercel CSP: zero violations, engine starts, no fallback.
