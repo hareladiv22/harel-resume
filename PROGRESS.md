@@ -35,7 +35,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - [x] P3.2 Meta, Open Graph, icons
 - [x] P3.3 Traffic-source links
 - [ ] P3.4 QR code
-- [ ] P3.5 robots.txt, sitemap.xml
+- [x] P3.5 robots.txt, sitemap.xml
 - [ ] ⏸ STOP 3
 
 ## Phase 4: Analytics
@@ -104,3 +104,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P3.1: hero secondary 'Download CV' (outlined pill) under the CTA; CV now on hero, contact, rail, mobile icon (all href=META.cv, download, _blank noopener). Bug fixed: links that are direct children of a slide (contact CV button since P2.9, new hero button) got pointer-events:none by specificity -> unclickable; now #stage .slide a/button. This bug is live on production until phase-3 merges. CV cache headers verified in P1.4 (max-age=0, must-revalidate).
 - 2026-10-29 P3.2: canonical, description (tagline), og:* (absolute image URL), twitter card, icons in index.html. Images made by tools/make-og.mjs + tools/make-icons.mjs via tools/chrome.mjs, which drives the already-installed Chrome headless: no npm packages, no Playwright download (deviation from spec's Playwright option). og.png 1200x630, 31 KB; favicon.ico (32+16), apple-touch-icon.png 180, icon.svg hand-written (same design). Open: Harel approves OG image; LinkedIn Post Inspector / WhatsApp / opengraph.xyz after merge (STOP 3).
 - 2026-10-29 P3.3: ?ref= read on load into window.visitRef (linkedin/cv/whatsapp/email/qr; unknown -> other; none -> direct), removed from URL with replaceState keeping other params and hash. README link table added. Tested headless: /?ref=linkedin#3 -> /#3, ref linkedin. deck_view wiring in P4.
+- 2026-10-29 P3.5: robots.txt (allow all + sitemap) and sitemap.xml (one URL) with https://harel-resume.vercel.app. XML validated. Open: 200 on production after merge (STOP 3).
