@@ -11,6 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500&family=Space+Grotesk:wght@500;700&display=swap">
 <link rel="stylesheet" href="css/styles.css">
+<noscript><link rel="stylesheet" href="css/nojs.css"></noscript>
+<script src="js/guard.js"></script>
 </head>
 <body>
 <main id="stage" aria-label="Interactive resume">
@@ -22,6 +24,20 @@
   <div id="wipe"></div>
   <div class="sr" id="live" aria-live="polite"></div>
 </main>
+<!-- Static fallback: shown when JavaScript is off (nojs.css) or the engine fails (guard.js).
+     These values duplicate META; validation checks they match (P5.3). -->
+<section class="fallback" id="fallback" hidden>
+  <h1>Harel Adiv</h1>
+  <p class="fb-title">Product Manager</p>
+  <p class="fb-tag">Product Manager. Agile, data-driven, and hands-on with AI.</p>
+  <a class="fb-cv" href="/assets/cv/Harel-Adiv-CV.pdf" download="Harel-Adiv-CV.pdf">Download CV</a>
+  <ul>
+    <li><span>Email</span><a href="mailto:Hareladiv@gmail.com">Hareladiv@gmail.com</a></li>
+    <li><span>Phone</span><a href="tel:+972524034600">+972 52-403-4600</a></li>
+    <li><span>WhatsApp</span><a href="https://wa.me/972524034600" target="_blank" rel="noopener">+972 52-403-4600</a></li>
+    <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/harel-adiv-054680234/" target="_blank" rel="noopener">linkedin.com/in/harel-adiv-054680234</a></li>
+  </ul>
+</section>
 <!-- Small phone held sideways: suggest rotating (see fit() in app.js). -->
 <div class="rotate" id="rotate" role="dialog" aria-modal="true" aria-labelledby="rotateMsg" hidden>
   <p id="rotateMsg">Rotate your phone for the best view</p>

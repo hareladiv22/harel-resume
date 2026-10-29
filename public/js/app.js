@@ -164,3 +164,4 @@ stage.addEventListener("pointerup",e=>release(e,true));
 stage.addEventListener("pointercancel",e=>release(e,false));
 stage.addEventListener("lostpointercapture",e=>release(e,false));
 show(Math.max(start,0));
+window.engineReady=true; // tells guard.js the site started fine

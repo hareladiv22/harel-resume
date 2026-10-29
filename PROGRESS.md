@@ -24,7 +24,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - [x] P2.7 Viewport, touch, safe areas
 - [x] P2.8 Small landscape phones
 - [x] P2.9 Contact slide & copy
-- [ ] P2.10 No-JS and error fallback
+- [x] P2.10 No-JS and error fallback
 - [ ] P2.11 Self-hosted fonts
 - [ ] P2.12 Safe rendering
 - [ ] P2.13 Content Security Policy
@@ -96,3 +96,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P2.7: removed viewport-fit=cover (browser keeps safe areas; page bg fills them). Re-fit on resize, orientationchange, visualViewport resize. Stage: user-select none + no callout; contact values selectable. Deviation: touch-action pinch-zoom instead of manipulation, because with manipulation Chrome claims a horizontal drag as a pan and fires pointercancel, so swipes never worked (tested). Also fixed: quick double tap only moved one slide (2nd tap dropped during wipe) -> moves are queued, relative moves via step(); moving >10px cancels hold. Tested headless touch: double tap = 2 slides, no zoom, swipes L/R work, vertical ignored. Open for Harel (P6.1): notch/home indicator on real iPhone, long-press select on contact values.
 - 2026-10-29 P2.8: rotate overlay when coarse pointer + landscape + innerHeight < 500; Continue dismisses for the visit; slides pause while shown (pause reason 'rotate'), stage inert, focus on Continue. Also fixed (pre-existing): resume called play() on finished animations, replaying slide entrances after a hold -> freeze/thaw only touch running/paused ones; new slide keeps system pauses (hidden/rotate). Tested headless. Open: real iPhone landscape (P6.1).
 - 2026-10-29 P2.9: contact rows from META (Email mailto, Phone tel, WhatsApp wa.me, LinkedIn), each with Copy (~45 CSS px on phone); big Download CV + privacyNote; duplicate contact items removed from content.js. mailto/tel same tab, web links _blank noopener. Tested headless: copy email -> clipboard 'Hareladiv@gmail.com', 'Copied' 2s + #live; execCommand fallback works; no overflow. Open: WhatsApp opens chat on real phone (Harel, P6.1).
+- 2026-10-29 P2.10: static #fallback in index.html (name, title, tagline, CV, email, phone, WhatsApp, LinkedIn). No JS -> <noscript> loads css/nojs.css. js/guard.js (loaded first) adds html.failed on any startup error or if app.js never sets engineReady by window load. External files only (CSP-safe). Tested headless: content.js blocked, app.js blocked, JS disabled -> fallback; normal -> hidden. P5.2 must call engineFail() when content.json fails.
