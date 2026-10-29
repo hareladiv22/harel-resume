@@ -22,6 +22,25 @@ const start=fromHash();
 // Autoplay runs until the first manual interaction, then stays off for the rest of the visit.
 // A deep link (e.g. /#4) means the visitor wants that slide, so no autoplay.
 let autoplay=!reduce&&start<0;
+// Auto-advance timer for the current slide (only while autoplay is on; the last slide never advances).
+// left = ms still to wait on this slide; t0 = when the running timer started.
+let left=0,t0=0;
+function arm(ms){clearTimeout(timer);timer=null;left=ms;if(autoplay&&cur<LAST&&!holds.size){t0=performance.now();timer=setTimeout(()=>step(1,true),ms)}}
+// Pausing: several reasons can overlap ("hold", "space", "hidden", "rotate"); we resume only when all are gone.
+// Animations (including the progress bar) freeze with the timer, so bar end and advance stay in sync.
+const holds=new Set();
+// Only touch running/paused animations: play() on a finished one would replay it from the start.
+const freeze=()=>document.getAnimations().forEach(a=>{if(a.playState==="running")a.pause()});
+const thaw=()=>document.getAnimations().forEach(a=>{if(a.playState==="paused")a.play()});
+function pause(why){
+ if(holds.has(why))return;
+ if(!holds.size){if(timer){clearTimeout(timer);timer=null;left-=performance.now()-t0}freeze()}
+ holds.add(why);
+}
+function resume(why){
+ if(!holds.delete(why)||holds.size)return;
+ thaw();arm(left);
+}
 // Scale the 1080×1920 stage to the window. Show desktop rails when each free side is ≥ 220px in landscape.
 const landscape=matchMedia("(orientation: landscape)");
 function fit(){
@@ -31,7 +50,18 @@ function fit(){
  stage.style.setProperty("--cvi",Math.max(124,46/k)+"px");
  document.body.style.setProperty("--side",side+"px");
  document.body.classList.toggle("rails",landscape.matches&&side>=220);
+ rotateHint();
 }
+// Small touch screen held sideways → overlay with "Continue anyway" (dismissed for the visit).
+// Slides pause while it is shown.
+const coarse=matchMedia("(pointer: coarse)");let rotateOff=false;
+function rotateHint(){
+ const on=!rotateOff&&coarse.matches&&landscape.matches&&innerHeight<500,el=$("#rotate");
+ if(on===!el.hidden)return;
+ el.hidden=!on;stage.inert=on;
+ if(on){pause("rotate");$("#rotateGo").focus()}else resume("rotate");
+}
+$("#rotateGo").onclick=()=>{rotateOff=true;rotateHint()};
 // Re-fit on rotation and when iOS toolbars show/hide (visualViewport resize).
 addEventListener("resize",fit);addEventListener("orientationchange",fit);window.visualViewport?.addEventListener("resize",fit);fit();
 // CV and contact links outside the slides (rails + mobile icon), filled from META.
@@ -55,28 +85,12 @@ function bars(){
  const b=$("#bars");b.classList.toggle("light",!!S[cur].light);b.classList.toggle("still",!autoplay||cur===LAST);
  b.innerHTML=S.map((s,i)=>`<i class="${i<cur?"done":i===cur?"cur":""}" style="--d:${s.d}s" data-i="${i}"><b></b></i>`).join("");
 }
-// Auto-advance timer for the current slide (only while autoplay is on; the last slide never advances).
-// left = ms still to wait on this slide; t0 = when the running timer started.
-let left=0,t0=0;
-function arm(ms){clearTimeout(timer);timer=null;left=ms;if(autoplay&&cur<LAST&&!holds.size){t0=performance.now();timer=setTimeout(()=>step(1,true),ms)}}
-// Pausing: several reasons can overlap ("hold", "hidden", "space"); we resume only when all are gone.
-// Animations (including the progress bar) freeze with the timer, so bar end and advance stay in sync.
-const holds=new Set();
-function pause(why){
- if(holds.has(why))return;
- if(!holds.size){if(timer){clearTimeout(timer);timer=null;left-=performance.now()-t0}document.getAnimations().forEach(a=>a.pause())}
- holds.add(why);
-}
-function resume(why){
- if(!holds.delete(why)||holds.size)return;
- document.getAnimations().forEach(a=>a.play());arm(left);
-}
 // First manual interaction: stop autoplay for good and freeze the bars.
 function manual(){if(!autoplay)return;autoplay=false;clearTimeout(timer);timer=null;bars()}
 function show(n){
  cur=n;
- // A new slide always starts unpaused.
- if(holds.size){holds.clear();document.getAnimations().forEach(a=>a.play())}
+ // The visitor's own pauses (hold, Space) end on a new slide; system ones (hidden tab, rotate hint) stay.
+ holds.delete("hold");holds.delete("space");
  els.forEach(e=>{e.classList.remove("on");e.inert=true});
  const e=els[n];e.inert=false;void e.offsetWidth;e.classList.add("on");count(e);
  $("#live").textContent=`Slide ${n+1} of ${S.length}`;
@@ -85,6 +99,7 @@ function show(n){
  stage.classList.toggle("last",n===LAST);stage.classList.toggle("light",!!S[n].light);
  $("#rCount").textContent=`${n+1} / ${S.length}`;$("#rPrev").disabled=n===0;$("#rNext").disabled=n===LAST;
  bars();arm(S[n].d*1000);
+ holds.size?freeze():thaw();
 }
 // go(n): animated move to slide n. auto=true only when the autoplay timer calls it.
 // A move requested during the transition is queued, so a quick double tap moves two slides.

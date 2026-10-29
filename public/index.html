@@ -22,6 +22,11 @@
   <div id="wipe"></div>
   <div class="sr" id="live" aria-live="polite"></div>
 </main>
+<!-- Small phone held sideways: suggest rotating (see fit() in app.js). -->
+<div class="rotate" id="rotate" role="dialog" aria-modal="true" aria-labelledby="rotateMsg" hidden>
+  <p id="rotateMsg">Rotate your phone for the best view</p>
+  <button id="rotateGo">Continue anyway</button>
+</div>
 <!-- Desktop rails: shown only when there is room beside the stage (see layout() in app.js). -->
 <nav class="rail" id="railL" aria-label="Slide navigation">
   <button class="rbtn" id="rPrev" aria-label="Previous slide">←</button>

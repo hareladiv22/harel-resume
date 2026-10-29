@@ -113,6 +113,12 @@ body.rails .rail{display:flex}
 .rcopy{min-height:44px;min-width:44px;padding:0 12px;border-radius:999px;border:2px solid rgba(255,246,232,.35);background:none;color:inherit;font:500 14px "Space Grotesk",system-ui,sans-serif;cursor:pointer}
 .rcopy:hover{border-color:var(--lime);color:var(--lime)}
 .rail :focus-visible{outline:3px solid var(--lime);outline-offset:4px}
+/* rotate hint (CSS px) */
+.rotate{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:16px;background:var(--navy);color:var(--cream);text-align:center}
+.rotate[hidden]{display:none}
+.rotate p{font:600 26px/1.2 Fraunces,Georgia,serif}
+.rotate button{min-height:48px;padding:12px 28px;border:0;border-radius:999px;background:var(--lime);color:var(--navy);font:700 17px "Space Grotesk",system-ui,sans-serif;cursor:pointer}
+.rotate button:focus-visible{outline:3px solid var(--cream);outline-offset:4px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (prefers-reduced-motion:reduce){
  *,*::before,*::after{animation:none!important;transition:none!important}

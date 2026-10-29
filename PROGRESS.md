@@ -22,7 +22,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - [x] P2.5 Desktop rails
 - [x] P2.6 Interactive elements beat tap zones
 - [x] P2.7 Viewport, touch, safe areas
-- [ ] P2.8 Small landscape phones
+- [x] P2.8 Small landscape phones
 - [ ] P2.9 Contact slide & copy
 - [ ] P2.10 No-JS and error fallback
 - [ ] P2.11 Self-hosted fonts
@@ -94,3 +94,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P2.5: rails (left: prev, counter, key hint; right: next, Download CV, Email + Copy, LinkedIn) when landscape and each side >= 220px; mobile CV icon (min 46 CSS px, navy on light slides) hidden on contact slide. META object added to content.js (temporary until P5). copy() helper with execCommand fallback. Space opens focused CV link. Bug found + fixed: on mobile Chrome the unscaled stage widened the layout viewport (innerWidth 833 on a 390 phone -> content cut); #stage is now position:fixed. Checked 7 sizes headless: no rail/stage overlap, nothing cut, CV one click away.
 - 2026-10-29 P2.6: slide content z 11 above tap zones with pointer-events:none (links/buttons auto), so links win and other taps fall through; pointerdown on a/button (not .nav) skips hold/swipe. Tested headless, all slides at 1440x900 and 390x844. Real-device tap check: Harel (P6.1).
 - 2026-10-29 P2.7: removed viewport-fit=cover (browser keeps safe areas; page bg fills them). Re-fit on resize, orientationchange, visualViewport resize. Stage: user-select none + no callout; contact values selectable. Deviation: touch-action pinch-zoom instead of manipulation, because with manipulation Chrome claims a horizontal drag as a pan and fires pointercancel, so swipes never worked (tested). Also fixed: quick double tap only moved one slide (2nd tap dropped during wipe) -> moves are queued, relative moves via step(); moving >10px cancels hold. Tested headless touch: double tap = 2 slides, no zoom, swipes L/R work, vertical ignored. Open for Harel (P6.1): notch/home indicator on real iPhone, long-press select on contact values.
+- 2026-10-29 P2.8: rotate overlay when coarse pointer + landscape + innerHeight < 500; Continue dismisses for the visit; slides pause while shown (pause reason 'rotate'), stage inert, focus on Continue. Also fixed (pre-existing): resume called play() on finished animations, replaying slide entrances after a hold -> freeze/thaw only touch running/paused ones; new slide keeps system pauses (hidden/rotate). Tested headless. Open: real iPhone landscape (P6.1).
