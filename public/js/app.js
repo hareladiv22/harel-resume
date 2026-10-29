@@ -10,8 +10,15 @@ const R={
  stats:s=>`<h2 class="hd rise">${s.h}</h2><div class="cards">${s.items.map((o,i)=>`<div class="c sc rise" style="--i:${i+1}"><div class="num">${o.pre}<span data-n="${o.n}" data-dec="${o.dec}">0</span>${o.suf}</div><div class="sl">${o.l}${o.s?`<i>${o.s}</i>`:""}</div></div>`).join("")}</div>`,
  timeline:s=>`<h2 class="hd rise">${s.h}</h2><div class="tl">${s.items.map((o,i)=>`<div class="it rise" style="--i:${i*3+2}"><div class="when">${o.when}</div><div class="nm">${o.name}</div><div class="tx">${o.text}</div></div>`).join("")}</div>`,
  cards:s=>`<h2 class="hd rise">${s.h}</h2><div class="cards">${s.items.map((o,i)=>`<div class="c rise" style="--i:${i+1}"><div class="tag">${o.tag}</div><div class="ct">${o.title}</div>${o.text?`<div class="cx">${o.text}</div>`:""}${o.big?`<div class="cb">${o.big}</div>`:""}</div>`).join("")}</div>`,
- contact:s=>`<h2 class="hd rise">${s.h}</h2><p class="sub rise" style="--i:1">${s.sub}</p><div>${s.items.map((o,i)=>`<div class="row rise" style="--i:${i+2}"><div class="tag">${o.k}</div><a href="${o.href}" target="_blank" rel="noopener">${o.v}</a></div>`).join("")}</div>`
+ contact:s=>`<h2 class="hd rise">${s.h}</h2><p class="sub rise" style="--i:1">${s.sub}</p><div>${CONTACTS.map((o,i)=>`<div class="row rise" style="--i:${i+2}"><div class="tag">${o.k}</div><div class="rv"><a href="${o.href}"${o.ext?' target="_blank" rel="noopener"':""}>${o.v}</a><button class="cp" data-copy="${o.c}" aria-label="Copy ${o.k}">Copy</button></div></div>`).join("")}</div><a class="pill cvb rise" style="--i:7" href="${META.cv}" download="${META.cvFileName}" target="_blank" rel="noopener">Download CV</a><p class="note rise" style="--i:8">${s.privacyNote}</p>`
 };
+// Contact rows, all from META. mailto:/tel: open in place; web links in a new tab. c = what Copy copies.
+const CONTACTS=[
+ {k:"Email",v:META.email,href:"mailto:"+META.email,c:META.email},
+ {k:"Phone",v:META.phoneDisplay,href:"tel:"+META.phone,c:META.phone},
+ {k:"WhatsApp",v:META.phoneDisplay,href:"https://wa.me/"+META.whatsapp,c:META.phone,ext:1},
+ {k:"LinkedIn",v:META.linkedin.replace(/^https:\/\/(www\.)?|\/$/g,""),href:META.linkedin,c:META.linkedin,ext:1}
+];
 const $=q=>document.querySelector(q), stage=$("#stage"), reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
 $("#slides").innerHTML=S.map((s,i)=>`<section class="slide ${s.t}" role="group" aria-label="Slide ${i+1} of ${S.length}">${R[s.type](s)}<div class="brand">${NAME}</div></section>`).join("");
 const els=[...document.querySelectorAll(".slide")], LAST=S.length-1;
@@ -75,6 +82,7 @@ async function copy(text,btn){
  clearTimeout(btn.t);btn.t=setTimeout(()=>btn.textContent=btn.dataset.label,2000);
 }
 $("#rMailCopy").onclick=e=>copy(META.email,e.currentTarget);
+$("#slides").addEventListener("click",e=>{const b=e.target.closest(".cp");if(b)copy(b.dataset.copy,b)});
 $("#rPrev").onclick=()=>step(-1);$("#rNext").onclick=()=>step(1);
 // Any click on the rails counts as a manual interaction (stops autoplay).
 document.querySelectorAll(".rail").forEach(r=>r.addEventListener("click",manual));

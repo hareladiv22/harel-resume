@@ -48,8 +48,6 @@ const S = [
   {tag:"Volunteering", title:"Teaching teens to code", text:"Course instructor at Tapuach Organization: web development (HTML, CSS, JavaScript) plus personal guidance."},
   {tag:"Languages", title:"Hebrew & English", text:"Hebrew native, English fluent."},
   {tag:"Hobbies", title:"Basketball & surfing"}]},
- {type:"contact", t:"t4", d:8, h:"Let’s <em>talk.</em>", sub:"Hiring, collaborating, or just curious? My inbox is open.", items:[
-  {k:"Email", v:"Hareladiv@gmail.com", href:"mailto:Hareladiv@gmail.com"},
-  {k:"Phone", v:"+972 52-403-4600", href:"tel:+972524034600"},
-  {k:"LinkedIn", v:"linkedin.com/in/harel-adiv-054680234", href:"https://www.linkedin.com/in/harel-adiv-054680234/"}]}
+ /* contact rows (email, phone, WhatsApp, LinkedIn) are built from META above */
+ {type:"contact", t:"t4", d:8, h:"Let’s <em>talk.</em>", sub:"Hiring, collaborating, or just curious? My inbox is open.", privacyNote:"Anonymous, cookie-free analytics."}
 ];
