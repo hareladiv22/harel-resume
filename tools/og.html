@@ -1,0 +1,28 @@
+<!doctype html>
+<!-- Open Graph image template, 1200×630. Rendered to public/assets/og.png by make-og.mjs.
+     Everything stays at least 60px from the edges (social crops). -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:Fraunces;font-weight:600;src:url(../public/fonts/fraunces-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Space Grotesk";font-weight:700;src:url(../public/fonts/space-grotesk-latin-700-normal.woff2) format("woff2")}
+:root{--navy:#14123A;--vio:#6C4BFF;--lime:#D6FF5C;--cream:#FFF6E8}
+*{margin:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden;background:var(--navy)}
+.card{position:relative;width:1200px;height:630px;padding:60px 96px;display:flex;flex-direction:column;justify-content:center}
+.circle{position:absolute;right:96px;top:90px;width:300px;height:300px;border-radius:50%;background:var(--vio)}
+.dot{position:absolute;right:120px;bottom:96px;width:96px;height:96px;border-radius:28px;background:var(--lime)}
+h1{position:relative;font:600 132px/1 Fraunces,Georgia,serif;letter-spacing:-4px;color:var(--cream)}
+p{position:relative;margin-top:28px;font:700 40px "Space Grotesk",system-ui,sans-serif;letter-spacing:8px;text-transform:uppercase;color:var(--lime)}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="circle"></div>
+  <div class="dot"></div>
+  <h1>Harel Adiv</h1>
+  <p>Product Manager</p>
+</div>
+</body>
+</html>
