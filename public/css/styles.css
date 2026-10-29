@@ -20,7 +20,8 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
 /* Slide content sits above the tap zones (#prev/#next, z 10) but lets taps through,
    except on links and buttons, which must work on the first tap. */
 .slide>*:not(.brand){position:relative;z-index:11;pointer-events:none}
-.slide a,.slide button{pointer-events:auto}
+/* #stage raises specificity above the rule before it, also for links that are direct children of a slide */
+#stage .slide a,#stage .slide button{pointer-events:auto}
 @keyframes drift{to{translate:-40px 60px}}
 .t1{background:var(--navy);--a:var(--vio);--hi:var(--lime)}
 .t2{background:var(--cream);--a:var(--lime);--hi:var(--vio);color:var(--navy)}
@@ -55,6 +56,9 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
 .sub{font:italic 500 46px/1.25 Fraunces,Georgia,serif;opacity:.9;max-width:880px}
 .pill{align-self:flex-start;margin-top:30px;padding:26px 46px;border-radius:999px;background:var(--hi);color:var(--navy);font:700 38px "Space Grotesk",sans-serif}
 .t2 .pill,.t3 .pill,.t6 .pill{color:var(--cream);background:var(--navy)}
+/* secondary button (hero CV): outlined pill, ~44 CSS px tall on a phone */
+.ghost{align-self:flex-start;display:inline-flex;align-items:center;min-height:124px;padding:0 46px;border:3px solid currentColor;border-radius:999px;color:inherit;text-decoration:none;font:700 34px "Space Grotesk",sans-serif}
+.ghost:focus-visible{outline:4px solid var(--lime);outline-offset:6px}
 /* words */
 .w{font:600 230px/1 Fraunces,Georgia,serif;letter-spacing:-8px;color:transparent;-webkit-text-stroke:3px currentColor}
 .on .w{animation:fill .6s forwards;animation-delay:calc(1s + var(--i)*1.5s)}

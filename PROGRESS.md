@@ -31,7 +31,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - [x] ⏸ STOP 2
 
 ## Phase 3: CV & sharing
-- [ ] P3.1 CV download everywhere
+- [x] P3.1 CV download everywhere
 - [ ] P3.2 Meta, Open Graph, icons
 - [ ] P3.3 Traffic-source links
 - [ ] P3.4 QR code
@@ -101,3 +101,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P2.12: esc() + rich() (only <em>, </em>, <br> survive); safeUrl() allows https:, mailto:, tel:, same-site paths; numbers coerced; theme/type checked (bad -> throw -> fallback). Inline style=--i replaced by data-s + style.setProperty; bars --d via CSSOM. Tested headless: injected <img onerror>, <script>, javascript: link -> text / '#', 0 alerts; slides 1 and 5 pixel-identical to before.
 - 2026-10-29 P2.13: CSP from spec added to vercel.json, unchanged. Tested headless with the same header served locally: full click-through (desktop + mobile), copy incl. fallback, fonts, 404 -> zero violations. Re-check with analytics in P4. Preview is behind Vercel login, so Harel confirms the preview at STOP 2.
 - 2026-10-29 STOP 2: Harel approved; phase-2 fast-forwarded into main (8a882d5), production deploy green. Production click-through (desktop + mobile) with real Vercel CSP: zero violations, engine starts, no fallback.
+- 2026-10-29 P3.1: hero secondary 'Download CV' (outlined pill) under the CTA; CV now on hero, contact, rail, mobile icon (all href=META.cv, download, _blank noopener). Bug fixed: links that are direct children of a slide (contact CV button since P2.9, new hero button) got pointer-events:none by specificity -> unclickable; now #stage .slide a/button. This bug is live on production until phase-3 merges. CV cache headers verified in P1.4 (max-age=0, must-revalidate).

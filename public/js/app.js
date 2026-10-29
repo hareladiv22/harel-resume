@@ -11,7 +11,7 @@ const rich=v=>esc(v).replace(/&lt;(\/?em|br)&gt;/g,"<$1>");
 const safeUrl=u=>/^(https:|mailto:|tel:|\/(?!\/))/.test(u)?u:"#", url=u=>esc(safeUrl(u));
 // data-s = stagger step; turned into the --i CSS variable after rendering (no inline style attributes, for the CSP).
 const R={
- hero:s=>`<h1 class="big">${s.lines.map((l,i)=>`<span class="ln"><b data-s="${i}">${rich(l)}</b></span>`).join("")}</h1><p class="sub rise" data-s="5">${rich(s.sub)}</p><span class="pill rise" data-s="7">${rich(s.cta)}</span>`,
+ hero:s=>`<h1 class="big">${s.lines.map((l,i)=>`<span class="ln"><b data-s="${i}">${rich(l)}</b></span>`).join("")}</h1><p class="sub rise" data-s="5">${rich(s.sub)}</p><span class="pill rise" data-s="7">${rich(s.cta)}</span><a class="ghost rise" data-s="8" href="${url(META.cv)}" download="${esc(META.cvFileName)}" target="_blank" rel="noopener">Download CV</a>`,
  words:s=>s.items.map((o,i)=>`<div class="w" data-s="${i}">${rich(o.w)}</div><div class="wt rise" data-s="${i*3+1}">${rich(o.t)}</div>`).join(""),
  stats:s=>`<h2 class="hd rise">${rich(s.h)}</h2><div class="cards">${s.items.map((o,i)=>`<div class="c sc rise" data-s="${i+1}"><div class="num">${esc(o.pre)}<span data-n="${+o.n||0}" data-dec="${+o.dec||0}">0</span>${esc(o.suf)}</div><div class="sl">${rich(o.l)}${o.s?`<i>${rich(o.s)}</i>`:""}</div></div>`).join("")}</div>`,
  timeline:s=>`<h2 class="hd rise">${rich(s.h)}</h2><div class="tl">${s.items.map((o,i)=>`<div class="it rise" data-s="${i*3+2}"><div class="when">${rich(o.when)}</div><div class="nm">${rich(o.name)}</div><div class="tx">${rich(o.text)}</div></div>`).join("")}</div>`,
