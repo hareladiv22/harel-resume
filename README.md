@@ -27,5 +27,18 @@ HTML, CSS ו-JavaScript פשוטים, בלי ספריות. מתארח בחינם
 - כל שינוי שנכנס לענף `main` ב-GitHub מתפרסם אוטומטית לאתר החי.
 - כל ענף אחר (למשל `phase-2`) מקבל כתובת תצוגה מקדימה משלו, בלי לגעת באתר החי.
 
+## איזה לינק לשים איפה
+הסיומת `?ref=` אומרת לסטטיסטיקות מאיפה הגיע המבקר. היא נמחקת מהכתובת מיד אחרי הכניסה, אז מי שמעביר את הלינק הלאה לא "נספר" כמקור הזה.
+
+| איפה | לינק |
+|---|---|
+| פרופיל ו-Featured בלינקדאין | `https://harel-resume.vercel.app/?ref=linkedin` |
+| בתוך קובץ הקו"ח | `https://harel-resume.vercel.app/?ref=cv` |
+| חתימת מייל | `https://harel-resume.vercel.app/?ref=email` |
+| הודעות וואטסאפ | `https://harel-resume.vercel.app/?ref=whatsapp` |
+| QR מודפס | `https://harel-resume.vercel.app/?ref=qr` |
+
+לינק לשקף מסוים: מוסיפים `#` ומספר השקף, למשל `https://harel-resume.vercel.app/?ref=linkedin#5`.
+
 ## עריכת טקסטים
 יתווסף בשלב 5, כשהתוכן יעבור לקובץ `public/content.json`.

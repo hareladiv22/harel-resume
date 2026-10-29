@@ -34,6 +34,11 @@ $("#slides").innerHTML=S.map((s,i)=>{
 document.querySelectorAll("[data-s]").forEach(e=>e.style.setProperty("--i",e.dataset.s));
 const els=[...document.querySelectorAll(".slide")], LAST=S.length-1;
 let cur=-1,timer,busy=false;
+// Traffic source from ?ref=… (kept in memory for analytics), then removed from the URL
+// so a copied/forwarded link doesn't carry it. No ref → "direct"; unknown → "other".
+const REFS=["linkedin","cv","whatsapp","email","qr"],params=new URLSearchParams(location.search);
+window.visitRef=params.has("ref")?(REFS.includes(params.get("ref"))?params.get("ref"):"other"):"direct";
+if(params.has("ref")){params.delete("ref");const q=params.toString();history.replaceState(null,"",location.pathname+(q?"?"+q:"")+location.hash)}
 // URL hash = slide number (#1..#N). Returns a 0-based index, or -1 if missing/invalid.
 function fromHash(){const m=/^#([1-9]\d*)$/.exec(location.hash),n=m?+m[1]:0;return n>=1&&n<=S.length?n-1:-1}
 const start=fromHash();
