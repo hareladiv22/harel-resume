@@ -73,7 +73,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 | Repo visibility | received | public |
 | Production URL | received | https://harel-resume.vercel.app |
 | PostHog project key | waiting | |
-| OG image approved | waiting | |
+| OG image approved | received | approved 2026-10-29 |
 | Hobbies (optional) | received | Card approved: tag "Hobbies", title "Basketball & surfing" (no text) |
 | Tools approved (fontsource, qrcode, playwright) | waiting | |
 
@@ -105,3 +105,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P3.2: canonical, description (tagline), og:* (absolute image URL), twitter card, icons in index.html. Images made by tools/make-og.mjs + tools/make-icons.mjs via tools/chrome.mjs, which drives the already-installed Chrome headless: no npm packages, no Playwright download (deviation from spec's Playwright option). og.png 1200x630, 31 KB; favicon.ico (32+16), apple-touch-icon.png 180, icon.svg hand-written (same design). Open: Harel approves OG image; LinkedIn Post Inspector / WhatsApp / opengraph.xyz after merge (STOP 3).
 - 2026-10-29 P3.3: ?ref= read on load into window.visitRef (linkedin/cv/whatsapp/email/qr; unknown -> other; none -> direct), removed from URL with replaceState keeping other params and hash. README link table added. Tested headless: /?ref=linkedin#3 -> /#3, ref linkedin. deck_view wiring in P4.
 - 2026-10-29 P3.5: robots.txt (allow all + sitemap) and sitemap.xml (one URL) with https://harel-resume.vercel.app. XML validated. Open: 200 on production after merge (STOP 3).
+- 2026-10-29 STOP 3 (partial): Harel approved OG image + merge; phase-3 fast-forwarded to main (eff70cc), deploy green. Production: robots, sitemap, og.png, icons 200; /nope 404; click-through with zero console errors. Open: Harel checks LinkedIn Post Inspector + WhatsApp preview; P3.4 QR waits for qrcode tool decision.
