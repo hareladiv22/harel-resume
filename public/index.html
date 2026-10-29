@@ -16,9 +16,22 @@
   <div id="slides"></div>
   <button class="nav" id="prev" aria-label="Previous slide"></button>
   <button class="nav" id="next" aria-label="Next slide"></button>
+  <a class="cvi" id="cvIcon" aria-label="Download CV" title="Download CV"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6m-3-3 3 3 3-3"/></svg></a>
   <div id="wipe"></div>
   <div class="sr" id="live" aria-live="polite"></div>
 </main>
+<!-- Desktop rails: shown only when there is room beside the stage (see layout() in app.js). -->
+<nav class="rail" id="railL" aria-label="Slide navigation">
+  <button class="rbtn" id="rPrev" aria-label="Previous slide">←</button>
+  <p class="rcount" id="rCount"></p>
+  <p class="rhint">Use ← → keys</p>
+</nav>
+<aside class="rail" id="railR" aria-label="CV and contact">
+  <button class="rbtn" id="rNext" aria-label="Next slide">→</button>
+  <a class="rcv" id="rCv">Download CV</a>
+  <div class="rrow"><a class="rlink" id="rMail">Email</a><button class="rcopy" id="rMailCopy" aria-label="Copy email address">Copy</button></div>
+  <a class="rlink" id="rLi" target="_blank" rel="noopener">LinkedIn</a>
+</aside>
 <script src="js/content.js"></script>
 <script src="js/app.js"></script>
 </body>

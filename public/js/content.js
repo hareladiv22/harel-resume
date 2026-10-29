@@ -6,6 +6,14 @@
    d = seconds before auto-advance.
    ============================================================ */
 const NAME = "Harel Adiv";
+/* Contact details and CV, used by the rails, buttons and contact slide. */
+const META = {
+ email: "Hareladiv@gmail.com",
+ phone: "+972524034600", phoneDisplay: "+972 52-403-4600",
+ whatsapp: "972524034600",
+ linkedin: "https://www.linkedin.com/in/harel-adiv-054680234/",
+ cv: "/assets/cv/Harel-Adiv-CV.pdf", cvFileName: "Harel-Adiv-CV.pdf"
+};
 const S = [
  {type:"hero", t:"t1", d:6, lines:["Hi, I’m","<em>Harel</em>","<em>Adiv.</em>"], sub:"Product Manager. Agile, data-driven, and hands-on with AI.", cta:"Tap to explore →"},
  {type:"words", t:"t2", d:10, light:1, items:[

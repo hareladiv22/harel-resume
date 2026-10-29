@@ -1,7 +1,8 @@
 :root{--navy:#14123A;--vio:#6C4BFF;--coral:#FF6B57;--lime:#D6FF5C;--cream:#FFF6E8;--e:cubic-bezier(.16,1,.3,1);--pop:cubic-bezier(.34,1.56,.64,1)}
 *{box-sizing:border-box;margin:0}
 html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:none}
-#stage{position:absolute;left:50%;top:50%;width:1080px;height:1920px;transform-origin:center;overflow:hidden;font-family:"Space Grotesk",system-ui,sans-serif;color:var(--cream)}
+/* fixed: the unscaled 1080px stage must not widen the mobile layout viewport */
+#stage{position:fixed;left:50%;top:50%;width:1080px;height:1920px;transform-origin:center;overflow:hidden;font-family:"Space Grotesk",system-ui,sans-serif;color:var(--cream)}
 .slide{position:absolute;inset:0;display:none;padding:170px 72px 160px;overflow:hidden}
 .slide.on{display:flex;flex-direction:column;justify-content:center;gap:30px}
 .slide::before{content:"";position:absolute;width:640px;height:640px;border-radius:50%;background:var(--a);right:-260px;top:180px;animation:drift 7s ease-in-out infinite alternate}
@@ -80,6 +81,30 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
 #wipe{position:absolute;z-index:30;left:480px;top:900px;width:120px;height:120px;border-radius:50%;background:var(--lime);transform:scale(0);pointer-events:none}
 #wipe.go{animation:wipe .75s var(--e) forwards}
 @keyframes wipe{0%{transform:scale(0)}55%{transform:scale(40)}100%{transform:scale(40);opacity:0}}
+/* mobile CV icon (stage px): above tap zones, below bars; hidden on the contact slide and when rails show */
+.cvi{position:absolute;top:80px;right:48px;z-index:15;width:var(--cvi,124px);height:var(--cvi,124px);border-radius:50%;display:grid;place-items:center;background:var(--lime);color:var(--navy)}
+.cvi svg{width:60px;height:60px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cvi:focus-visible{outline:4px solid var(--lime);outline-offset:6px}
+#stage.light .cvi{background:var(--navy);color:var(--cream)}
+#stage.last .cvi,body.rails .cvi{display:none}
+/* desktop rails (CSS px, outside the stage). --side = free width beside the stage, set in app.js */
+.rail{position:fixed;top:50%;transform:translateY(-50%);width:180px;display:none;flex-direction:column;align-items:center;gap:18px;color:var(--cream);font:500 16px/1.3 "Space Grotesk",system-ui,sans-serif;text-align:center}
+body.rails .rail{display:flex}
+#railL{left:calc(var(--side,0px)/2 - 90px)}
+#railR{right:calc(var(--side,0px)/2 - 90px)}
+.rbtn{width:56px;height:56px;border-radius:50%;border:2px solid rgba(255,246,232,.35);background:none;color:inherit;font:700 24px "Space Grotesk",system-ui,sans-serif;cursor:pointer}
+.rbtn:hover{border-color:var(--lime);color:var(--lime)}
+.rbtn:disabled{opacity:.3;cursor:default;border-color:rgba(255,246,232,.35);color:inherit}
+.rcount{font-weight:700;font-size:18px;letter-spacing:2px}
+.rhint{opacity:.6;font-size:14px}
+.rcv{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;border-radius:999px;background:var(--lime);color:var(--navy);font-weight:700;text-decoration:none}
+.rcv:hover{background:var(--cream)}
+.rrow{display:flex;align-items:center;gap:6px}
+.rlink{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;color:inherit;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(255,246,232,.4)}
+.rlink:hover{color:var(--lime)}
+.rcopy{min-height:44px;min-width:44px;padding:0 12px;border-radius:999px;border:2px solid rgba(255,246,232,.35);background:none;color:inherit;font:500 14px "Space Grotesk",system-ui,sans-serif;cursor:pointer}
+.rcopy:hover{border-color:var(--lime);color:var(--lime)}
+.rail :focus-visible{outline:3px solid var(--lime);outline-offset:4px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (prefers-reduced-motion:reduce){
  *,*::before,*::after{animation:none!important;transition:none!important}

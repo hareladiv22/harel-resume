@@ -19,7 +19,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - [x] P2.2 Pause/resume with remaining time
 - [x] P2.3 URL state & deep links
 - [x] P2.4 Keyboard
-- [ ] P2.5 Desktop rails
+- [x] P2.5 Desktop rails
 - [ ] P2.6 Interactive elements beat tap zones
 - [ ] P2.7 Viewport, touch, safe areas
 - [ ] P2.8 Small landscape phones
@@ -91,3 +91,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P2.2: pause reasons (hold/hidden/space) with remaining time; animations incl. bar freeze together; pointercancel + lostpointercapture end a hold; hold never navigates. Tested headless: hold 5s on d=6 -> timer fires with bar end (~10.5s), 20s hidden -> resumes with remaining time, cancel clears hold. Real iOS gesture check: Harel (P6.1).
 - 2026-10-29 P2.3: hash = slide number via replaceState; valid deep link opens slide with autoplay off; invalid (#0,#99,#abc,#2.5) -> slide 1, hash #1; hashchange navigates (manual). Tested headless incl. refresh on 5. Note: refresh on #1 also counts as deep link (no autoplay), by design.
 - 2026-10-29 P2.4: key map per spec (arrows, PageUp/Down, Home/End, Space = pause toggle while autoplay else next); modifiers ignored; Space/Enter on focused a/button/input untouched; preventDefault only on handled keys. Tested headless. Open: Space on CV link (an <a>) must open it -> handled when CV buttons are built (P2.5/P3.1).
+- 2026-10-29 P2.5: rails (left: prev, counter, key hint; right: next, Download CV, Email + Copy, LinkedIn) when landscape and each side >= 220px; mobile CV icon (min 46 CSS px, navy on light slides) hidden on contact slide. META object added to content.js (temporary until P5). copy() helper with execCommand fallback. Space opens focused CV link. Bug found + fixed: on mobile Chrome the unscaled stage widened the layout viewport (innerWidth 833 on a 390 phone -> content cut); #stage is now position:fixed. Checked 7 sizes headless: no rail/stage overlap, nothing cut, CV one click away.

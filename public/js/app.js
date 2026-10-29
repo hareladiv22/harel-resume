@@ -22,8 +22,31 @@ const start=fromHash();
 // Autoplay runs until the first manual interaction, then stays off for the rest of the visit.
 // A deep link (e.g. /#4) means the visitor wants that slide, so no autoplay.
 let autoplay=!reduce&&start<0;
-function fit(){stage.style.transform=`translate(-50%,-50%) scale(${Math.min(innerWidth/1080,innerHeight/1920)})`}
+// Scale the 1080×1920 stage to the window. Show desktop rails when each free side is ≥ 220px in landscape.
+const landscape=matchMedia("(orientation: landscape)");
+function fit(){
+ const k=Math.min(innerWidth/1080,innerHeight/1920),side=(innerWidth-1080*k)/2;
+ stage.style.transform=`translate(-50%,-50%) scale(${k})`;
+ // Keep the mobile CV icon at least 46 CSS px on small phones (stage px shrink with the scale).
+ stage.style.setProperty("--cvi",Math.max(124,46/k)+"px");
+ document.body.style.setProperty("--side",side+"px");
+ document.body.classList.toggle("rails",landscape.matches&&side>=220);
+}
 addEventListener("resize",fit);fit();
+// CV and contact links outside the slides (rails + mobile icon), filled from META.
+for(const a of [$("#rCv"),$("#cvIcon")]){a.href=META.cv;a.download=META.cvFileName;a.target="_blank";a.rel="noopener"}
+$("#rMail").href="mailto:"+META.email;$("#rLi").href=META.linkedin;
+// Copy text to the clipboard, with an old-browser fallback. The button says "Copied" for 2s.
+async function copy(text,btn){
+ try{await navigator.clipboard.writeText(text)}
+ catch{const t=document.createElement("textarea");t.value=text;t.setAttribute("readonly","");t.className="sr";document.body.append(t);t.select();document.execCommand("copy");t.remove()}
+ btn.dataset.label??=btn.textContent;btn.textContent="Copied";$("#live").textContent="Copied "+text;
+ clearTimeout(btn.t);btn.t=setTimeout(()=>btn.textContent=btn.dataset.label,2000);
+}
+$("#rMailCopy").onclick=e=>copy(META.email,e.currentTarget);
+$("#rPrev").onclick=()=>go(cur-1);$("#rNext").onclick=()=>go(cur+1);
+// Any click on the rails counts as a manual interaction (stops autoplay).
+document.querySelectorAll(".rail").forEach(r=>r.addEventListener("click",manual));
 function count(el){el.querySelectorAll("[data-n]").forEach(n=>{const to=+n.dataset.n,dec=+n.dataset.dec;if(reduce){n.textContent=to.toFixed(dec);return}
  const t0=performance.now()+400;(function f(t){const p=Math.min(Math.max((t-t0)/1500,0),1);n.textContent=(to*(1-Math.pow(1-p,3))).toFixed(dec);if(p<1)requestAnimationFrame(f)})(performance.now())})}
 // Progress bars: past = filled, current = running (autoplay) or filled + highlighted ("still").
@@ -58,7 +81,8 @@ function show(n){
  $("#live").textContent=`Slide ${n+1} of ${S.length}`;
  // replaceState (not pushState): Back leaves the site instead of stepping through slides.
  history.replaceState(null,"",location.pathname+location.search+"#"+(n+1));
- stage.classList.toggle("last",n===LAST);
+ stage.classList.toggle("last",n===LAST);stage.classList.toggle("light",!!S[n].light);
+ $("#rCount").textContent=`${n+1} / ${S.length}`;$("#rPrev").disabled=n===0;$("#rNext").disabled=n===LAST;
  bars();arm(S[n].d*1000);
 }
 // go(n): animated move to slide n. auto=true only when the autoplay timer calls it.
@@ -78,6 +102,8 @@ const KEYS={ArrowRight:()=>go(cur+1),PageDown:()=>go(cur+1),ArrowLeft:()=>go(cur
  " ":e=>{if(e.repeat)return;if(autoplay)holds.has("space")?resume("space"):pause("space");else go(cur+1)}};
 addEventListener("keydown",e=>{
  if(e.ctrlKey||e.metaKey||e.altKey||!KEYS[e.key])return;
+ // Links ignore Space natively; CV links are styled as buttons, so make Space open them too.
+ if(e.key===" "&&e.target.matches?.("a[download]")){e.preventDefault();e.target.click();return}
  if((e.key===" "||e.key==="Enter")&&e.target.closest?.("a,button,input,textarea,[contenteditable]"))return;
  e.preventDefault();KEYS[e.key](e);
 });
