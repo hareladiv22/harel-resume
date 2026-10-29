@@ -71,7 +71,16 @@ function go(n,auto){
 let skip=false;
 $("#next").onclick=()=>{if(!skip)go(cur+1)};$("#prev").onclick=()=>{if(!skip)go(cur-1)};
 $("#bars").onclick=e=>{const i=e.target.closest("i");if(i)go(+i.dataset.i)};
-addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key===" ")go(cur+1);if(e.key==="ArrowLeft")go(cur-1)});
+// Keyboard. Modifier combos (e.g. Ctrl+→) stay with the browser.
+// Space/Enter on a focused link or button keep their native action.
+const KEYS={ArrowRight:()=>go(cur+1),PageDown:()=>go(cur+1),ArrowLeft:()=>go(cur-1),PageUp:()=>go(cur-1),Home:()=>go(0),End:()=>go(LAST),
+ // Space: while autoplay runs it toggles pause (not a "manual" action); otherwise it means next.
+ " ":e=>{if(e.repeat)return;if(autoplay)holds.has("space")?resume("space"):pause("space");else go(cur+1)}};
+addEventListener("keydown",e=>{
+ if(e.ctrlKey||e.metaKey||e.altKey||!KEYS[e.key])return;
+ if((e.key===" "||e.key==="Enter")&&e.target.closest?.("a,button,input,textarea,[contenteditable]"))return;
+ e.preventDefault();KEYS[e.key](e);
+});
 // Hash edited by hand (counts as manual). Invalid → put the current slide back in the URL.
 addEventListener("hashchange",()=>{const n=fromHash();if(n<0)history.replaceState(null,"",location.pathname+location.search+"#"+(cur+1));else go(n)});
 // Background tab: pause; back in view: continue with the time that was left.
