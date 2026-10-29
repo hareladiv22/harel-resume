@@ -16,8 +16,12 @@ const $=q=>document.querySelector(q), stage=$("#stage"), reduce=matchMedia("(pre
 $("#slides").innerHTML=S.map((s,i)=>`<section class="slide ${s.t}" role="group" aria-label="Slide ${i+1} of ${S.length}">${R[s.type](s)}<div class="brand">${NAME}</div></section>`).join("");
 const els=[...document.querySelectorAll(".slide")], LAST=S.length-1;
 let cur=-1,timer,busy=false;
+// URL hash = slide number (#1..#N). Returns a 0-based index, or -1 if missing/invalid.
+function fromHash(){const m=/^#([1-9]\d*)$/.exec(location.hash),n=m?+m[1]:0;return n>=1&&n<=S.length?n-1:-1}
+const start=fromHash();
 // Autoplay runs until the first manual interaction, then stays off for the rest of the visit.
-let autoplay=!reduce;
+// A deep link (e.g. /#4) means the visitor wants that slide, so no autoplay.
+let autoplay=!reduce&&start<0;
 function fit(){stage.style.transform=`translate(-50%,-50%) scale(${Math.min(innerWidth/1080,innerHeight/1920)})`}
 addEventListener("resize",fit);fit();
 function count(el){el.querySelectorAll("[data-n]").forEach(n=>{const to=+n.dataset.n,dec=+n.dataset.dec;if(reduce){n.textContent=to.toFixed(dec);return}
@@ -52,6 +56,8 @@ function show(n){
  els.forEach(e=>{e.classList.remove("on");e.inert=true});
  const e=els[n];e.inert=false;void e.offsetWidth;e.classList.add("on");count(e);
  $("#live").textContent=`Slide ${n+1} of ${S.length}`;
+ // replaceState (not pushState): Back leaves the site instead of stepping through slides.
+ history.replaceState(null,"",location.pathname+location.search+"#"+(n+1));
  stage.classList.toggle("last",n===LAST);
  bars();arm(S[n].d*1000);
 }
@@ -66,6 +72,8 @@ let skip=false;
 $("#next").onclick=()=>{if(!skip)go(cur+1)};$("#prev").onclick=()=>{if(!skip)go(cur-1)};
 $("#bars").onclick=e=>{const i=e.target.closest("i");if(i)go(+i.dataset.i)};
 addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key===" ")go(cur+1);if(e.key==="ArrowLeft")go(cur-1)});
+// Hash edited by hand (counts as manual). Invalid → put the current slide back in the URL.
+addEventListener("hashchange",()=>{const n=fromHash();if(n<0)history.replaceState(null,"",location.pathname+location.search+"#"+(cur+1));else go(n)});
 // Background tab: pause; back in view: continue with the time that was left.
 document.addEventListener("visibilitychange",()=>document.hidden?pause("hidden"):resume("hidden"));
 /* hold to pause + swipe */
@@ -85,4 +93,4 @@ stage.addEventListener("pointerup",e=>release(e,true));
 // pointercancel (e.g. iOS system gesture) and lost capture end a hold without navigating.
 stage.addEventListener("pointercancel",e=>release(e,false));
 stage.addEventListener("lostpointercapture",e=>release(e,false));
-show(0);
+show(Math.max(start,0));

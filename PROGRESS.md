@@ -17,7 +17,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 ## Phase 2: Robust engine & UX
 - [x] P2.1 Autoplay policy
 - [x] P2.2 Pause/resume with remaining time
-- [ ] P2.3 URL state & deep links
+- [x] P2.3 URL state & deep links
 - [ ] P2.4 Keyboard
 - [ ] P2.5 Desktop rails
 - [ ] P2.6 Interactive elements beat tap zones
@@ -89,3 +89,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P0.2 done: hobbies card added to 'Off the clock' slide (3 cards now). STOP 1 approved by Harel.
 - 2026-10-29 P2.1: autoplay only until first manual action (tap zone, swipe, key, bar); then no timers, bars 'still' (current filled, past dimmed). Reduced motion = no autoplay. Tested headless: auto-advance at 6s, tap stops it (12s no move), reduced motion stays on 1. Deep-link condition comes with P2.3.
 - 2026-10-29 P2.2: pause reasons (hold/hidden/space) with remaining time; animations incl. bar freeze together; pointercancel + lostpointercapture end a hold; hold never navigates. Tested headless: hold 5s on d=6 -> timer fires with bar end (~10.5s), 20s hidden -> resumes with remaining time, cancel clears hold. Real iOS gesture check: Harel (P6.1).
+- 2026-10-29 P2.3: hash = slide number via replaceState; valid deep link opens slide with autoplay off; invalid (#0,#99,#abc,#2.5) -> slide 1, hash #1; hashchange navigates (manual). Tested headless incl. refresh on 5. Note: refresh on #1 also counts as deep link (no autoplay), by design.
