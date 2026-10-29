@@ -28,16 +28,32 @@ function bars(){
  b.innerHTML=S.map((s,i)=>`<i class="${i<cur?"done":i===cur?"cur":""}" style="--d:${s.d}s" data-i="${i}"><b></b></i>`).join("");
 }
 // Auto-advance timer for the current slide (only while autoplay is on; the last slide never advances).
-function arm(){clearTimeout(timer);if(autoplay&&cur<LAST)timer=setTimeout(()=>go(cur+1,true),S[cur].d*1000)}
+// left = ms still to wait on this slide; t0 = when the running timer started.
+let left=0,t0=0;
+function arm(ms){clearTimeout(timer);timer=null;left=ms;if(autoplay&&cur<LAST&&!holds.size){t0=performance.now();timer=setTimeout(()=>go(cur+1,true),ms)}}
+// Pausing: several reasons can overlap ("hold", "hidden", "space"); we resume only when all are gone.
+// Animations (including the progress bar) freeze with the timer, so bar end and advance stay in sync.
+const holds=new Set();
+function pause(why){
+ if(holds.has(why))return;
+ if(!holds.size){if(timer){clearTimeout(timer);timer=null;left-=performance.now()-t0}document.getAnimations().forEach(a=>a.pause())}
+ holds.add(why);
+}
+function resume(why){
+ if(!holds.delete(why)||holds.size)return;
+ document.getAnimations().forEach(a=>a.play());arm(left);
+}
 // First manual interaction: stop autoplay for good and freeze the bars.
-function manual(){if(!autoplay)return;autoplay=false;clearTimeout(timer);bars()}
+function manual(){if(!autoplay)return;autoplay=false;clearTimeout(timer);timer=null;bars()}
 function show(n){
  cur=n;
+ // A new slide always starts unpaused.
+ if(holds.size){holds.clear();document.getAnimations().forEach(a=>a.play())}
  els.forEach(e=>{e.classList.remove("on");e.inert=true});
  const e=els[n];e.inert=false;void e.offsetWidth;e.classList.add("on");count(e);
  $("#live").textContent=`Slide ${n+1} of ${S.length}`;
  stage.classList.toggle("last",n===LAST);
- bars();arm();
+ bars();arm(S[n].d*1000);
 }
 // go(n): animated move to slide n. auto=true only when the autoplay timer calls it.
 function go(n,auto){
@@ -50,14 +66,23 @@ let skip=false;
 $("#next").onclick=()=>{if(!skip)go(cur+1)};$("#prev").onclick=()=>{if(!skip)go(cur-1)};
 $("#bars").onclick=e=>{const i=e.target.closest("i");if(i)go(+i.dataset.i)};
 addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key===" ")go(cur+1);if(e.key==="ArrowLeft")go(cur-1)});
+// Background tab: pause; back in view: continue with the time that was left.
+document.addEventListener("visibilitychange",()=>document.hidden?pause("hidden"):resume("hidden"));
 /* hold to pause + swipe */
-let hold,paused=false,x0=null,y0=0;
-stage.addEventListener("pointerdown",e=>{x0=e.clientX;y0=e.clientY;hold=setTimeout(()=>{paused=true;clearTimeout(timer);document.getAnimations().forEach(a=>a.pause())},300)});
-stage.addEventListener("pointerup",e=>{
+let hold,held=false,x0=null,y0=0;
+// skip briefly blocks the tap-zone click that follows a hold or swipe.
+function skipClick(){skip=true;setTimeout(()=>skip=false,60)}
+stage.addEventListener("pointerdown",e=>{x0=e.clientX;y0=e.clientY;hold=setTimeout(()=>{held=true;pause("hold")},300)});
+// Release ends a hold; only a plain release (not a hold) can be a swipe.
+function release(e,canSwipe){
  clearTimeout(hold);
- if(paused){paused=false;skip=true;setTimeout(()=>skip=false,60);document.getAnimations().forEach(a=>a.play());
-  if(autoplay&&cur<LAST)timer=setTimeout(()=>go(cur+1,true),3000)}
- else if(x0!==null){const dx=e.clientX-x0,dy=e.clientY-y0;
-  if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)){skip=true;setTimeout(()=>skip=false,60);go(cur+(dx<0?1:-1))}}
- x0=null});
+ if(held){held=false;skipClick();resume("hold")}
+ else if(canSwipe&&x0!==null){const dx=e.clientX-x0,dy=e.clientY-y0;
+  if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)){skipClick();go(cur+(dx<0?1:-1))}}
+ x0=null;
+}
+stage.addEventListener("pointerup",e=>release(e,true));
+// pointercancel (e.g. iOS system gesture) and lost capture end a hold without navigating.
+stage.addEventListener("pointercancel",e=>release(e,false));
+stage.addEventListener("lostpointercapture",e=>release(e,false));
 show(0);
