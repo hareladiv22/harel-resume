@@ -10,7 +10,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 ## Phase 1: Repo & first deploy
 - [ ] P1.1 Restructure into target tree
 - [ ] P1.2 404.html
-- [ ] P1.3 Git init + GitHub repo
+- [x] P1.3 Git init + GitHub repo
 - [ ] P1.4 Connect Vercel
 - [ ] ⏸ STOP 1
 
@@ -84,3 +84,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P0.2 (partial): got LinkedIn, 4+ years OK, name harel-adiv, public repo, hobbies. LinkedIn filled in content.js. Open: corrected CV PDF, hobbies card copy.
 - 2026-10-29 P1.1 (files only): package.json (no-op build), vercel.json, Hebrew README.md. Not committed yet (git missing; first commit is P1.3). Open: Live Server visual check by Harel.
 - 2026-10-29 P1.2 (files only): public/404.html + public/css/404.css (external CSS so CSP in P2.13 won't block it). Added /HarelcvH.pdf to .gitignore (public repo; draft CV stays local). Open: verify on Vercel in P1.4.
+- 2026-10-29 P1.3: git init, .gitattributes (LF in repo), first commit de1b473, public repo https://github.com/hareladiv22/harel-resume created and pushed with Harel's OK; default branch main.
