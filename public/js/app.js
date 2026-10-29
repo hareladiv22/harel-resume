@@ -115,7 +115,10 @@ document.addEventListener("visibilitychange",()=>document.hidden?pause("hidden")
 let hold,held=false,x0=null,y0=0;
 // skip briefly blocks the tap-zone click that follows a hold or swipe.
 function skipClick(){skip=true;setTimeout(()=>skip=false,60)}
-stage.addEventListener("pointerdown",e=>{x0=e.clientX;y0=e.clientY;hold=setTimeout(()=>{held=true;pause("hold")},300)});
+stage.addEventListener("pointerdown",e=>{
+ // Pressing a link or button (other than the tap zones) is never a hold or swipe.
+ if(e.target.closest("a,button:not(.nav)")){x0=null;return}
+ x0=e.clientX;y0=e.clientY;hold=setTimeout(()=>{held=true;pause("hold")},300)});
 // Release ends a hold; only a plain release (not a hold) can be a swipe.
 function release(e,canSwipe){
  clearTimeout(hold);

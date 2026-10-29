@@ -7,7 +7,10 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
 .slide.on{display:flex;flex-direction:column;justify-content:center;gap:30px}
 .slide::before{content:"";position:absolute;width:640px;height:640px;border-radius:50%;background:var(--a);right:-260px;top:180px;animation:drift 7s ease-in-out infinite alternate}
 .slide::after{content:"";position:absolute;width:260px;height:260px;border-radius:44px;background:var(--a);opacity:.5;left:-90px;bottom:260px;animation:drift 5s ease-in-out infinite alternate-reverse}
-.slide>*:not(.brand){position:relative;z-index:1}
+/* Slide content sits above the tap zones (#prev/#next, z 10) but lets taps through,
+   except on links and buttons, which must work on the first tap. */
+.slide>*:not(.brand){position:relative;z-index:11;pointer-events:none}
+.slide a,.slide button{pointer-events:auto}
 @keyframes drift{to{translate:-40px 60px}}
 .t1{background:var(--navy);--a:var(--vio);--hi:var(--lime)}
 .t2{background:var(--cream);--a:var(--lime);--hi:var(--vio);color:var(--navy)}

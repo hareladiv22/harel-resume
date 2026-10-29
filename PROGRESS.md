@@ -20,7 +20,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - [x] P2.3 URL state & deep links
 - [x] P2.4 Keyboard
 - [x] P2.5 Desktop rails
-- [ ] P2.6 Interactive elements beat tap zones
+- [x] P2.6 Interactive elements beat tap zones
 - [ ] P2.7 Viewport, touch, safe areas
 - [ ] P2.8 Small landscape phones
 - [ ] P2.9 Contact slide & copy
@@ -92,3 +92,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P2.3: hash = slide number via replaceState; valid deep link opens slide with autoplay off; invalid (#0,#99,#abc,#2.5) -> slide 1, hash #1; hashchange navigates (manual). Tested headless incl. refresh on 5. Note: refresh on #1 also counts as deep link (no autoplay), by design.
 - 2026-10-29 P2.4: key map per spec (arrows, PageUp/Down, Home/End, Space = pause toggle while autoplay else next); modifiers ignored; Space/Enter on focused a/button/input untouched; preventDefault only on handled keys. Tested headless. Open: Space on CV link (an <a>) must open it -> handled when CV buttons are built (P2.5/P3.1).
 - 2026-10-29 P2.5: rails (left: prev, counter, key hint; right: next, Download CV, Email + Copy, LinkedIn) when landscape and each side >= 220px; mobile CV icon (min 46 CSS px, navy on light slides) hidden on contact slide. META object added to content.js (temporary until P5). copy() helper with execCommand fallback. Space opens focused CV link. Bug found + fixed: on mobile Chrome the unscaled stage widened the layout viewport (innerWidth 833 on a 390 phone -> content cut); #stage is now position:fixed. Checked 7 sizes headless: no rail/stage overlap, nothing cut, CV one click away.
+- 2026-10-29 P2.6: slide content z 11 above tap zones with pointer-events:none (links/buttons auto), so links win and other taps fall through; pointerdown on a/button (not .nav) skips hold/swipe. Tested headless, all slides at 1440x900 and 390x844. Real-device tap check: Harel (P6.1).
