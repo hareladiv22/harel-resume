@@ -24,6 +24,9 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
 .bars i.done b{width:100%}
 .bars i.cur b{animation:bar var(--d) linear forwards}
 @keyframes bar{to{width:100%}}
+/* autoplay off: current bar filled, past bars dimmed so the current one stands out */
+.bars.still i.cur b{animation:none;width:100%}
+.bars.still i.done b{opacity:.5}
 /* motion */
 .rise{opacity:0}
 .on .rise{animation:rise .85s var(--e) forwards;animation-delay:calc(var(--i,0)*.14s + .15s)}

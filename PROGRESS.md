@@ -15,7 +15,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - [x] ⏸ STOP 1
 
 ## Phase 2: Robust engine & UX
-- [ ] P2.1 Autoplay policy
+- [x] P2.1 Autoplay policy
 - [ ] P2.2 Pause/resume with remaining time
 - [ ] P2.3 URL state & deep links
 - [ ] P2.4 Keyboard
@@ -87,3 +87,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P1.3: git init, .gitattributes (LF in repo), first commit de1b473, public repo https://github.com/hareladiv22/harel-resume created and pushed with Harel's OK; default branch main.
 - 2026-10-29 P1.4: Vercel project harel-resume (team harelboostapp-1849s-projects). Production https://harel-resume.vercel.app: / 200, /nope 404 with 404.html, all vercel.json headers present, CV PDF served. Branch phase-2 pushed -> preview built OK, behind Vercel login (Standard Protection), X-Robots-Tag: noindex present. P1.1/P1.2 ticked: production serves them correctly; Harel confirms visually at STOP 1.
 - 2026-10-29 P0.2 done: hobbies card added to 'Off the clock' slide (3 cards now). STOP 1 approved by Harel.
+- 2026-10-29 P2.1: autoplay only until first manual action (tap zone, swipe, key, bar); then no timers, bars 'still' (current filled, past dimmed). Reduced motion = no autoplay. Tested headless: auto-advance at 6s, tap stops it (12s no move), reduced motion stays on 1. Deep-link condition comes with P2.3.

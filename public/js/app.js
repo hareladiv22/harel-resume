@@ -14,24 +14,35 @@ const R={
 };
 const $=q=>document.querySelector(q), stage=$("#stage"), reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
 $("#slides").innerHTML=S.map((s,i)=>`<section class="slide ${s.t}" role="group" aria-label="Slide ${i+1} of ${S.length}">${R[s.type](s)}<div class="brand">${NAME}</div></section>`).join("");
-const els=[...document.querySelectorAll(".slide")];
+const els=[...document.querySelectorAll(".slide")], LAST=S.length-1;
 let cur=-1,timer,busy=false;
+// Autoplay runs until the first manual interaction, then stays off for the rest of the visit.
+let autoplay=!reduce;
 function fit(){stage.style.transform=`translate(-50%,-50%) scale(${Math.min(innerWidth/1080,innerHeight/1920)})`}
 addEventListener("resize",fit);fit();
 function count(el){el.querySelectorAll("[data-n]").forEach(n=>{const to=+n.dataset.n,dec=+n.dataset.dec;if(reduce){n.textContent=to.toFixed(dec);return}
  const t0=performance.now()+400;(function f(t){const p=Math.min(Math.max((t-t0)/1500,0),1);n.textContent=(to*(1-Math.pow(1-p,3))).toFixed(dec);if(p<1)requestAnimationFrame(f)})(performance.now())})}
+// Progress bars: past = filled, current = running (autoplay) or filled + highlighted ("still").
+function bars(){
+ const b=$("#bars");b.classList.toggle("light",!!S[cur].light);b.classList.toggle("still",!autoplay||cur===LAST);
+ b.innerHTML=S.map((s,i)=>`<i class="${i<cur?"done":i===cur?"cur":""}" style="--d:${s.d}s" data-i="${i}"><b></b></i>`).join("");
+}
+// Auto-advance timer for the current slide (only while autoplay is on; the last slide never advances).
+function arm(){clearTimeout(timer);if(autoplay&&cur<LAST)timer=setTimeout(()=>go(cur+1,true),S[cur].d*1000)}
+// First manual interaction: stop autoplay for good and freeze the bars.
+function manual(){if(!autoplay)return;autoplay=false;clearTimeout(timer);bars()}
 function show(n){
- clearTimeout(timer);cur=n;
+ cur=n;
  els.forEach(e=>{e.classList.remove("on");e.inert=true});
  const e=els[n];e.inert=false;void e.offsetWidth;e.classList.add("on");count(e);
  $("#live").textContent=`Slide ${n+1} of ${S.length}`;
- const last=n===S.length-1;stage.classList.toggle("last",last);
- const b=$("#bars");b.classList.toggle("light",!!S[n].light);
- b.innerHTML=S.map((s,i)=>`<i class="${i<n||(last&&i===n)?"done":i===n?"cur":""}" style="--d:${s.d}s" data-i="${i}"></i>`.replace("></i>","><b></b></i>")).join("");
- if(!last&&!reduce)timer=setTimeout(()=>go(cur+1),S[n].d*1000);
+ stage.classList.toggle("last",n===LAST);
+ bars();arm();
 }
-function go(n){
- n=Math.max(0,Math.min(S.length-1,n));if(n===cur||busy)return;busy=true;
+// go(n): animated move to slide n. auto=true only when the autoplay timer calls it.
+function go(n,auto){
+ if(!auto)manual();
+ n=Math.max(0,Math.min(LAST,n));if(n===cur||busy)return;busy=true;
  const w=$("#wipe");w.classList.remove("go");void w.offsetWidth;w.classList.add("go");
  setTimeout(()=>{show(n);busy=false},reduce?0:300);
 }
@@ -45,7 +56,7 @@ stage.addEventListener("pointerdown",e=>{x0=e.clientX;y0=e.clientY;hold=setTimeo
 stage.addEventListener("pointerup",e=>{
  clearTimeout(hold);
  if(paused){paused=false;skip=true;setTimeout(()=>skip=false,60);document.getAnimations().forEach(a=>a.play());
-  if(cur<S.length-1&&!reduce)timer=setTimeout(()=>go(cur+1),3000)}
+  if(autoplay&&cur<LAST)timer=setTimeout(()=>go(cur+1,true),3000)}
  else if(x0!==null){const dx=e.clientX-x0,dy=e.clientY-y0;
   if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)){skip=true;setTimeout(()=>skip=false,60);go(cur+(dx<0?1:-1))}}
  x0=null});
