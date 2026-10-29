@@ -4,13 +4,19 @@
    Loaded after content.js, so NAME and S are available here.
    ============================================================ */
 /* ===== ENGINE (no need to edit) ===== */
+// Safe rendering: every content string is escaped. rich() then re-allows only <em>, </em> and <br>.
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
+const rich=v=>esc(v).replace(/&lt;(\/?em|br)&gt;/g,"<$1>");
+// Links: only https:, mailto:, tel: or a path on this site; anything else becomes a dead link.
+const safeUrl=u=>/^(https:|mailto:|tel:|\/(?!\/))/.test(u)?u:"#", url=u=>esc(safeUrl(u));
+// data-s = stagger step; turned into the --i CSS variable after rendering (no inline style attributes, for the CSP).
 const R={
- hero:s=>`<h1 class="big">${s.lines.map((l,i)=>`<span class="ln"><b style="--i:${i}">${l}</b></span>`).join("")}</h1><p class="sub rise" style="--i:5">${s.sub}</p><span class="pill rise" style="--i:7">${s.cta}</span>`,
- words:s=>s.items.map((o,i)=>`<div class="w" style="--i:${i}">${o.w}</div><div class="wt rise" style="--i:${i*3+1}">${o.t}</div>`).join(""),
- stats:s=>`<h2 class="hd rise">${s.h}</h2><div class="cards">${s.items.map((o,i)=>`<div class="c sc rise" style="--i:${i+1}"><div class="num">${o.pre}<span data-n="${o.n}" data-dec="${o.dec}">0</span>${o.suf}</div><div class="sl">${o.l}${o.s?`<i>${o.s}</i>`:""}</div></div>`).join("")}</div>`,
- timeline:s=>`<h2 class="hd rise">${s.h}</h2><div class="tl">${s.items.map((o,i)=>`<div class="it rise" style="--i:${i*3+2}"><div class="when">${o.when}</div><div class="nm">${o.name}</div><div class="tx">${o.text}</div></div>`).join("")}</div>`,
- cards:s=>`<h2 class="hd rise">${s.h}</h2><div class="cards">${s.items.map((o,i)=>`<div class="c rise" style="--i:${i+1}"><div class="tag">${o.tag}</div><div class="ct">${o.title}</div>${o.text?`<div class="cx">${o.text}</div>`:""}${o.big?`<div class="cb">${o.big}</div>`:""}</div>`).join("")}</div>`,
- contact:s=>`<h2 class="hd rise">${s.h}</h2><p class="sub rise" style="--i:1">${s.sub}</p><div>${CONTACTS.map((o,i)=>`<div class="row rise" style="--i:${i+2}"><div class="tag">${o.k}</div><div class="rv"><a href="${o.href}"${o.ext?' target="_blank" rel="noopener"':""}>${o.v}</a><button class="cp" data-copy="${o.c}" aria-label="Copy ${o.k}">Copy</button></div></div>`).join("")}</div><a class="pill cvb rise" style="--i:7" href="${META.cv}" download="${META.cvFileName}" target="_blank" rel="noopener">Download CV</a><p class="note rise" style="--i:8">${s.privacyNote}</p>`
+ hero:s=>`<h1 class="big">${s.lines.map((l,i)=>`<span class="ln"><b data-s="${i}">${rich(l)}</b></span>`).join("")}</h1><p class="sub rise" data-s="5">${rich(s.sub)}</p><span class="pill rise" data-s="7">${rich(s.cta)}</span>`,
+ words:s=>s.items.map((o,i)=>`<div class="w" data-s="${i}">${rich(o.w)}</div><div class="wt rise" data-s="${i*3+1}">${rich(o.t)}</div>`).join(""),
+ stats:s=>`<h2 class="hd rise">${rich(s.h)}</h2><div class="cards">${s.items.map((o,i)=>`<div class="c sc rise" data-s="${i+1}"><div class="num">${esc(o.pre)}<span data-n="${+o.n||0}" data-dec="${+o.dec||0}">0</span>${esc(o.suf)}</div><div class="sl">${rich(o.l)}${o.s?`<i>${rich(o.s)}</i>`:""}</div></div>`).join("")}</div>`,
+ timeline:s=>`<h2 class="hd rise">${rich(s.h)}</h2><div class="tl">${s.items.map((o,i)=>`<div class="it rise" data-s="${i*3+2}"><div class="when">${rich(o.when)}</div><div class="nm">${rich(o.name)}</div><div class="tx">${rich(o.text)}</div></div>`).join("")}</div>`,
+ cards:s=>`<h2 class="hd rise">${rich(s.h)}</h2><div class="cards">${s.items.map((o,i)=>`<div class="c rise" data-s="${i+1}"><div class="tag">${rich(o.tag)}</div><div class="ct">${rich(o.title)}</div>${o.text?`<div class="cx">${rich(o.text)}</div>`:""}${o.big?`<div class="cb">${rich(o.big)}</div>`:""}</div>`).join("")}</div>`,
+ contact:s=>`<h2 class="hd rise">${rich(s.h)}</h2><p class="sub rise" data-s="1">${rich(s.sub)}</p><div>${CONTACTS.map((o,i)=>`<div class="row rise" data-s="${i+2}"><div class="tag">${esc(o.k)}</div><div class="rv"><a href="${url(o.href)}"${o.ext?' target="_blank" rel="noopener"':""}>${esc(o.v)}</a><button class="cp" data-copy="${esc(o.c)}" aria-label="Copy ${esc(o.k)}">Copy</button></div></div>`).join("")}</div><a class="pill cvb rise" data-s="7" href="${url(META.cv)}" download="${esc(META.cvFileName)}" target="_blank" rel="noopener">Download CV</a><p class="note rise" data-s="8">${rich(s.privacyNote)}</p>`
 };
 // Contact rows, all from META. mailto:/tel: open in place; web links in a new tab. c = what Copy copies.
 const CONTACTS=[
@@ -20,7 +26,12 @@ const CONTACTS=[
  {k:"LinkedIn",v:META.linkedin.replace(/^https:\/\/(www\.)?|\/$/g,""),href:META.linkedin,c:META.linkedin,ext:1}
 ];
 const $=q=>document.querySelector(q), stage=$("#stage"), reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
-$("#slides").innerHTML=S.map((s,i)=>`<section class="slide ${s.t}" role="group" aria-label="Slide ${i+1} of ${S.length}">${R[s.type](s)}<div class="brand">${NAME}</div></section>`).join("");
+// Theme must be t1..t7 and type a known renderer; anything else is a content error (guard.js shows the fallback).
+$("#slides").innerHTML=S.map((s,i)=>{
+ if(!R[s.type]||!/^t[1-7]$/.test(s.t))throw new Error(`Slide ${i+1}: unknown type or theme`);
+ return `<section class="slide ${s.t}" role="group" aria-label="Slide ${i+1} of ${S.length}">${R[s.type](s)}<div class="brand">${esc(NAME)}</div></section>`;
+}).join("");
+document.querySelectorAll("[data-s]").forEach(e=>e.style.setProperty("--i",e.dataset.s));
 const els=[...document.querySelectorAll(".slide")], LAST=S.length-1;
 let cur=-1,timer,busy=false;
 // URL hash = slide number (#1..#N). Returns a 0-based index, or -1 if missing/invalid.
@@ -72,8 +83,8 @@ $("#rotateGo").onclick=()=>{rotateOff=true;rotateHint()};
 // Re-fit on rotation and when iOS toolbars show/hide (visualViewport resize).
 addEventListener("resize",fit);addEventListener("orientationchange",fit);window.visualViewport?.addEventListener("resize",fit);fit();
 // CV and contact links outside the slides (rails + mobile icon), filled from META.
-for(const a of [$("#rCv"),$("#cvIcon")]){a.href=META.cv;a.download=META.cvFileName;a.target="_blank";a.rel="noopener"}
-$("#rMail").href="mailto:"+META.email;$("#rLi").href=META.linkedin;
+for(const a of [$("#rCv"),$("#cvIcon")]){a.href=safeUrl(META.cv);a.download=META.cvFileName;a.target="_blank";a.rel="noopener"}
+$("#rMail").href=safeUrl("mailto:"+META.email);$("#rLi").href=safeUrl(META.linkedin);
 // Copy text to the clipboard, with an old-browser fallback. The button says "Copied" for 2s.
 async function copy(text,btn){
  try{await navigator.clipboard.writeText(text)}
@@ -91,7 +102,8 @@ function count(el){el.querySelectorAll("[data-n]").forEach(n=>{const to=+n.datas
 // Progress bars: past = filled, current = running (autoplay) or filled + highlighted ("still").
 function bars(){
  const b=$("#bars");b.classList.toggle("light",!!S[cur].light);b.classList.toggle("still",!autoplay||cur===LAST);
- b.innerHTML=S.map((s,i)=>`<i class="${i<cur?"done":i===cur?"cur":""}" style="--d:${s.d}s" data-i="${i}"><b></b></i>`).join("");
+ b.innerHTML=S.map((s,i)=>`<i class="${i<cur?"done":i===cur?"cur":""}" data-i="${i}"><b></b></i>`).join("");
+ b.querySelectorAll("i").forEach((e,i)=>e.style.setProperty("--d",(+S[i].d||8)+"s"));
 }
 // First manual interaction: stop autoplay for good and freeze the bars.
 function manual(){if(!autoplay)return;autoplay=false;clearTimeout(timer);timer=null;bars()}
