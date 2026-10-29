@@ -38,7 +38,8 @@ const S = [
   {tag:"AI & code", title:"Claude · GPT · Python · HTML, CSS, JS", text:"Hands-on with AI tools and front-end code"}]},
  {type:"cards", t:"t7", d:8, light:1, h:"Off the clock,<br><em>still curious.</em>", items:[
   {tag:"Volunteering", title:"Teaching teens to code", text:"Course instructor at Tapuach Organization: web development (HTML, CSS, JavaScript) plus personal guidance."},
-  {tag:"Languages", title:"Hebrew & English", text:"Hebrew native, English fluent."}]},
+  {tag:"Languages", title:"Hebrew & English", text:"Hebrew native, English fluent."},
+  {tag:"Hobbies", title:"Basketball & surfing"}]},
  {type:"contact", t:"t4", d:8, h:"Let’s <em>talk.</em>", sub:"Hiring, collaborating, or just curious? My inbox is open.", items:[
   {k:"Email", v:"Hareladiv@gmail.com", href:"mailto:Hareladiv@gmail.com"},
   {k:"Phone", v:"+972 52-403-4600", href:"tel:+972524034600"},

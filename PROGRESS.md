@@ -5,14 +5,14 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 ## Phase 0: Environment & inputs
 - [x] P0.0 Bootstrap files from PLAN.md
 - [x] P0.1 Check environment (OS, git, node, gh, ANTHROPIC_API_KEY)
-- [ ] P0.2 Collect inputs from Harel
+- [x] P0.2 Collect inputs from Harel
 
 ## Phase 1: Repo & first deploy
 - [x] P1.1 Restructure into target tree
 - [x] P1.2 404.html
 - [x] P1.3 Git init + GitHub repo
 - [x] P1.4 Connect Vercel
-- [ ] ⏸ STOP 1
+- [x] ⏸ STOP 1
 
 ## Phase 2: Robust engine & UX
 - [ ] P2.1 Autoplay policy
@@ -74,7 +74,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 | Production URL | received | https://harel-resume.vercel.app |
 | PostHog project key | waiting | |
 | OG image approved | waiting | |
-| Hobbies (optional) | received | Basketball and surfing. Card copy waiting for Harel's approval |
+| Hobbies (optional) | received | Card approved: tag "Hobbies", title "Basketball & surfing" (no text) |
 | Tools approved (fontsource, qrcode, playwright) | waiting | |
 
 ## Log
@@ -86,3 +86,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P1.2 (files only): public/404.html + public/css/404.css (external CSS so CSP in P2.13 won't block it). Added /HarelcvH.pdf to .gitignore (public repo; draft CV stays local). Open: verify on Vercel in P1.4.
 - 2026-10-29 P1.3: git init, .gitattributes (LF in repo), first commit de1b473, public repo https://github.com/hareladiv22/harel-resume created and pushed with Harel's OK; default branch main.
 - 2026-10-29 P1.4: Vercel project harel-resume (team harelboostapp-1849s-projects). Production https://harel-resume.vercel.app: / 200, /nope 404 with 404.html, all vercel.json headers present, CV PDF served. Branch phase-2 pushed -> preview built OK, behind Vercel login (Standard Protection), X-Robots-Tag: noindex present. P1.1/P1.2 ticked: production serves them correctly; Harel confirms visually at STOP 1.
+- 2026-10-29 P0.2 done: hobbies card added to 'Off the clock' slide (3 cards now). STOP 1 approved by Harel.
