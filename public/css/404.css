@@ -1,0 +1,11 @@
+/* 404 page: same tokens as styles.css, no fonts loaded (fallbacks are fine here) */
+:root{--navy:#14123A;--vio:#6C4BFF;--lime:#D6FF5C;--cream:#FFF6E8}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{display:flex;align-items:center;justify-content:center;padding:24px;background:var(--navy);color:var(--cream);font-family:"Space Grotesk",system-ui,sans-serif;overflow:hidden}
+body::before{content:"";position:fixed;width:60vmin;height:60vmin;border-radius:50%;background:var(--vio);right:-20vmin;top:-10vmin;z-index:0}
+main{position:relative;z-index:1;max-width:640px}
+.code{font:italic 500 clamp(24px,5vw,36px) Fraunces,Georgia,serif;color:var(--lime)}
+h1{font:600 clamp(40px,9vw,80px)/1 Fraunces,Georgia,serif;letter-spacing:-.02em;margin:12px 0 32px}
+a{display:inline-flex;align-items:center;min-height:44px;padding:12px 28px;border-radius:999px;background:var(--lime);color:var(--navy);font-weight:700;font-size:18px;text-decoration:none}
+a:focus-visible{outline:4px solid var(--lime);outline-offset:6px}

@@ -1,0 +1,8 @@
+.DS_Store
+Thumbs.db
+node_modules/
+tools/node_modules/
+tools/out/
+.vercel
+# Harel's draft CV in the root; only public/assets/cv/ is published
+/HarelcvH.pdf
