@@ -2,7 +2,12 @@
 *{box-sizing:border-box;margin:0}
 html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:none}
 /* fixed: the unscaled 1080px stage must not widen the mobile layout viewport */
-#stage{position:fixed;left:50%;top:50%;width:1080px;height:1920px;transform-origin:center;overflow:hidden;font-family:"Space Grotesk",system-ui,sans-serif;color:var(--cream)}
+#stage{position:fixed;left:50%;top:50%;width:1080px;height:1920px;transform-origin:center;overflow:hidden;font-family:"Space Grotesk",system-ui,sans-serif;color:var(--cream);
+ /* pinch-zoom (not manipulation): no double-tap zoom, pinch still allowed, and the browser never
+    claims a horizontal drag as a pan (which would cancel our swipe). No selection/callout while tapping. */
+ touch-action:pinch-zoom;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+/* contact values stay selectable (long-press to copy) */
+#stage .row a{user-select:text;-webkit-user-select:text;-webkit-touch-callout:default}
 .slide{position:absolute;inset:0;display:none;padding:170px 72px 160px;overflow:hidden}
 .slide.on{display:flex;flex-direction:column;justify-content:center;gap:30px}
 .slide::before{content:"";position:absolute;width:640px;height:640px;border-radius:50%;background:var(--a);right:-260px;top:180px;animation:drift 7s ease-in-out infinite alternate}

@@ -32,7 +32,8 @@ function fit(){
  document.body.style.setProperty("--side",side+"px");
  document.body.classList.toggle("rails",landscape.matches&&side>=220);
 }
-addEventListener("resize",fit);fit();
+// Re-fit on rotation and when iOS toolbars show/hide (visualViewport resize).
+addEventListener("resize",fit);addEventListener("orientationchange",fit);window.visualViewport?.addEventListener("resize",fit);fit();
 // CV and contact links outside the slides (rails + mobile icon), filled from META.
 for(const a of [$("#rCv"),$("#cvIcon")]){a.href=META.cv;a.download=META.cvFileName;a.target="_blank";a.rel="noopener"}
 $("#rMail").href="mailto:"+META.email;$("#rLi").href=META.linkedin;
@@ -44,7 +45,7 @@ async function copy(text,btn){
  clearTimeout(btn.t);btn.t=setTimeout(()=>btn.textContent=btn.dataset.label,2000);
 }
 $("#rMailCopy").onclick=e=>copy(META.email,e.currentTarget);
-$("#rPrev").onclick=()=>go(cur-1);$("#rNext").onclick=()=>go(cur+1);
+$("#rPrev").onclick=()=>step(-1);$("#rNext").onclick=()=>step(1);
 // Any click on the rails counts as a manual interaction (stops autoplay).
 document.querySelectorAll(".rail").forEach(r=>r.addEventListener("click",manual));
 function count(el){el.querySelectorAll("[data-n]").forEach(n=>{const to=+n.dataset.n,dec=+n.dataset.dec;if(reduce){n.textContent=to.toFixed(dec);return}
@@ -57,7 +58,7 @@ function bars(){
 // Auto-advance timer for the current slide (only while autoplay is on; the last slide never advances).
 // left = ms still to wait on this slide; t0 = when the running timer started.
 let left=0,t0=0;
-function arm(ms){clearTimeout(timer);timer=null;left=ms;if(autoplay&&cur<LAST&&!holds.size){t0=performance.now();timer=setTimeout(()=>go(cur+1,true),ms)}}
+function arm(ms){clearTimeout(timer);timer=null;left=ms;if(autoplay&&cur<LAST&&!holds.size){t0=performance.now();timer=setTimeout(()=>step(1,true),ms)}}
 // Pausing: several reasons can overlap ("hold", "hidden", "space"); we resume only when all are gone.
 // Animations (including the progress bar) freeze with the timer, so bar end and advance stay in sync.
 const holds=new Set();
@@ -86,20 +87,26 @@ function show(n){
  bars();arm(S[n].d*1000);
 }
 // go(n): animated move to slide n. auto=true only when the autoplay timer calls it.
+// A move requested during the transition is queued, so a quick double tap moves two slides.
+let target=-1,queued=-1;
 function go(n,auto){
  if(!auto)manual();
- n=Math.max(0,Math.min(LAST,n));if(n===cur||busy)return;busy=true;
+ n=Math.max(0,Math.min(LAST,n));
+ if(busy){if(n!==target)queued=n;return}
+ if(n===cur)return;busy=true;target=n;
  const w=$("#wipe");w.classList.remove("go");void w.offsetWidth;w.classList.add("go");
- setTimeout(()=>{show(n);busy=false},reduce?0:300);
+ setTimeout(()=>{show(n);busy=false;if(queued>=0){const q=queued;queued=-1;go(q,true)}},reduce?0:300);
 }
+// step(±1): relative move, counted from where we are heading (not where we are) during a transition.
+function step(d,auto){go((busy?(queued>=0?queued:target):cur)+d,auto)}
 let skip=false;
-$("#next").onclick=()=>{if(!skip)go(cur+1)};$("#prev").onclick=()=>{if(!skip)go(cur-1)};
+$("#next").onclick=()=>{if(!skip)step(1)};$("#prev").onclick=()=>{if(!skip)step(-1)};
 $("#bars").onclick=e=>{const i=e.target.closest("i");if(i)go(+i.dataset.i)};
 // Keyboard. Modifier combos (e.g. Ctrl+→) stay with the browser.
 // Space/Enter on a focused link or button keep their native action.
-const KEYS={ArrowRight:()=>go(cur+1),PageDown:()=>go(cur+1),ArrowLeft:()=>go(cur-1),PageUp:()=>go(cur-1),Home:()=>go(0),End:()=>go(LAST),
+const KEYS={ArrowRight:()=>step(1),PageDown:()=>step(1),ArrowLeft:()=>step(-1),PageUp:()=>step(-1),Home:()=>go(0),End:()=>go(LAST),
  // Space: while autoplay runs it toggles pause (not a "manual" action); otherwise it means next.
- " ":e=>{if(e.repeat)return;if(autoplay)holds.has("space")?resume("space"):pause("space");else go(cur+1)}};
+ " ":e=>{if(e.repeat)return;if(autoplay)holds.has("space")?resume("space"):pause("space");else step(1)}};
 addEventListener("keydown",e=>{
  if(e.ctrlKey||e.metaKey||e.altKey||!KEYS[e.key])return;
  // Links ignore Space natively; CV links are styled as buttons, so make Space open them too.
@@ -119,12 +126,14 @@ stage.addEventListener("pointerdown",e=>{
  // Pressing a link or button (other than the tap zones) is never a hold or swipe.
  if(e.target.closest("a,button:not(.nav)")){x0=null;return}
  x0=e.clientX;y0=e.clientY;hold=setTimeout(()=>{held=true;pause("hold")},300)});
+// A finger that moves is swiping, not holding.
+stage.addEventListener("pointermove",e=>{if(x0!==null&&!held&&Math.hypot(e.clientX-x0,e.clientY-y0)>10)clearTimeout(hold)});
 // Release ends a hold; only a plain release (not a hold) can be a swipe.
 function release(e,canSwipe){
  clearTimeout(hold);
  if(held){held=false;skipClick();resume("hold")}
  else if(canSwipe&&x0!==null){const dx=e.clientX-x0,dy=e.clientY-y0;
-  if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)){skipClick();go(cur+(dx<0?1:-1))}}
+  if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)){skipClick();step(dx<0?1:-1)}}
  x0=null;
 }
 stage.addEventListener("pointerup",e=>release(e,true));
