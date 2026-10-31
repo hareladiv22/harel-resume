@@ -52,7 +52,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - [x] P5.2 Loading + fallback
 - [x] P5.3 validate-content.mjs as build
 - [x] P5.4 Runtime overflow guard
-- [ ] P5.5 Owner editing guide
+- [x] P5.5 Owner editing guide
 - [ ] ⏸ STOP 5
 
 ## Phase 6: QA & launch
@@ -112,3 +112,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-31 P5.3: scripts/validate-content.mjs (Node built-ins) = Vercel build. Parse errors: line/column + caret + EN/HE hint. Schema (§8.6), limits (§11), unknown-field typo check, em/br-only markup, placeholders (TODO, your-handle, example.com, [..]), contact data only in meta, meta formats, CV file exists. Cross-checks: index.html title/description/canonical/og:* and fallback values, robots.txt, sitemap.xml vs meta; no TODO in public text files. package.json scripts per §8.2. Tested on copies: missing comma, trailing comma, over-limit, TODO, bad theme/light/d, typo field, bad markup, bad email, contact in slides, meta drift -> exit 1 with clear messages; unchanged -> exit 0. Note for Harel: changing meta name/title/tagline/contact also needs index.html (static copies) -> README explains.
 - 2026-10-31 P5.3 (Vercel check): phase-5 build green; temp branch with a missing comma -> Vercel build failed, production stayed 200; temp branch deleted.
 - 2026-10-31 P5.4: fitText() on first show: if slide scrollHeight > clientHeight -> fit-1 (zoom .9) then fit-2 (zoom .8) on content (not brand); still over -> console.warn('overflow', n). Tested headless 390x844: current content all 'ok'; 300-char card text stays on screen; 1100 chars -> fit-2 fits; 3500 chars -> warning.
+- 2026-10-31 P5.5: README Hebrew editing guide (§12.10): edit on GitHub, JSON rules, Vercel Ready/Error, reading error paths (0-based), rollback (History / Promote to Production), length limits table, meta also lives in index.html, replacing the CV, npm run check.
