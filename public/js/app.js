@@ -1,7 +1,7 @@
 /* ============================================================
-   ENGINE: renders slides from CONTENT (js/content.js) and handles
-   navigation, timers, progress bars, swipe, hold-to-pause.
-   Loaded after content.js, so NAME and S are available here.
+   ENGINE: loads the text from /content.json, renders the slides and
+   handles navigation, timers, progress bars, swipe, hold-to-pause.
+   To change text, edit public/content.json (not this file).
    ============================================================ */
 /* ===== ENGINE (no need to edit) ===== */
 // Safe rendering: every content string is escaped. rich() then re-allows only <em>, </em> and <br>.
@@ -9,6 +9,11 @@ const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const rich=v=>esc(v).replace(/&lt;(\/?em|br)&gt;/g,"<$1>");
 // Links: only https:, mailto:, tel: or a path on this site; anything else becomes a dead link.
 const safeUrl=u=>/^(https:|mailto:|tel:|\/(?!\/))/.test(u)?u:"#", url=u=>esc(safeUrl(u));
+
+// init(C) builds the whole deck from the parsed content.json (C). Its body runs to the end of the
+// engine below (kept unindented for readability).
+function init(C){
+const META=C.meta, NAME=META.name, S=C.slides;
 // data-s = stagger step; turned into the --i CSS variable after rendering (no inline style attributes, for the CSP).
 const R={
  hero:s=>`<h1 class="big">${s.lines.map((l,i)=>`<span class="ln"><b data-s="${i}">${rich(l)}</b></span>`).join("")}</h1><p class="sub rise" data-s="5">${rich(s.sub)}</p><span class="pill rise" data-s="7">${rich(s.cta)}</span><a class="ghost rise" data-s="8" href="${url(META.cv)}" download="${esc(META.cvFileName)}" target="_blank" rel="noopener">Download CV</a>`,
@@ -28,8 +33,8 @@ const CONTACTS=[
 const $=q=>document.querySelector(q), stage=$("#stage"), reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
 // Theme must be t1..t7 and type a known renderer; anything else is a content error (guard.js shows the fallback).
 $("#slides").innerHTML=S.map((s,i)=>{
- if(!R[s.type]||!/^t[1-7]$/.test(s.t))throw new Error(`Slide ${i+1}: unknown type or theme`);
- return `<section class="slide ${s.t}" role="group" aria-label="Slide ${i+1} of ${S.length}">${R[s.type](s)}<div class="brand">${esc(NAME)}</div></section>`;
+ if(!R[s.type]||!/^t[1-7]$/.test(s.theme))throw new Error(`Slide ${i+1}: unknown type or theme`);
+ return `<section class="slide ${s.theme}" role="group" aria-label="Slide ${i+1} of ${S.length}">${R[s.type](s)}<div class="brand">${esc(NAME)}</div></section>`;
 }).join("");
 document.querySelectorAll("[data-s]").forEach(e=>e.style.setProperty("--i",e.dataset.s));
 const els=[...document.querySelectorAll(".slide")], LAST=S.length-1;
@@ -182,3 +187,13 @@ stage.addEventListener("pointercancel",e=>release(e,false));
 stage.addEventListener("lostpointercapture",e=>release(e,false));
 show(Math.max(start,0));
 window.engineReady=true; // tells guard.js the site started fine
+// Read-only state, handy for debugging in the browser console.
+window.deck={get cur(){return cur},get autoplay(){return autoplay},holds};
+} // end init
+
+/* ===== START: load the text, then build the deck. Any failure → static fallback (guard.js). ===== */
+window.engineStarted=true;
+fetch("/content.json",{cache:"no-cache"})
+ .then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json()})
+ .then(init)
+ .catch(err=>{console.error("Site could not start (content.json):",err);window.engineFail()});

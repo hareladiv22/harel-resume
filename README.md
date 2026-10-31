@@ -17,7 +17,7 @@ HTML, CSS ו-JavaScript פשוטים, בלי ספריות. מתארח בחינם
 | `public/index.html` | הדף הראשי |
 | `public/404.html` | דף "הדף לא קיים" |
 | `public/css/` | עיצוב |
-| `public/js/content.js` | הטקסטים של האתר (זמני; יוחלף ב-`content.json`) |
+| `public/content.json` | **כל הטקסטים של האתר** (הקובץ היחיד שעורכים) |
 | `public/js/app.js` | המנוע: שקפים, ניווט, טיימרים |
 | `public/assets/cv/` | קובץ קורות החיים להורדה |
 | `vercel.json` | הגדרות Vercel (תיקיית האתר, כותרות אבטחה) |

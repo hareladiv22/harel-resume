@@ -48,7 +48,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - [ ] ⏸ STOP 4
 
 ## Phase 5: Content as JSON
-- [ ] P5.1 content.json
+- [x] P5.1 content.json
 - [ ] P5.2 Loading + fallback
 - [ ] P5.3 validate-content.mjs as build
 - [ ] P5.4 Runtime overflow guard
@@ -107,3 +107,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P3.5: robots.txt (allow all + sitemap) and sitemap.xml (one URL) with https://harel-resume.vercel.app. XML validated. Open: 200 on production after merge (STOP 3).
 - 2026-10-29 STOP 3 (partial): Harel approved OG image + merge; phase-3 fast-forwarded to main (eff70cc), deploy green. Production: robots, sitemap, og.png, icons 200; /nope 404; click-through with zero console errors. Open: Harel checks LinkedIn Post Inspector + WhatsApp preview; P3.4 QR waits for qrcode tool decision.
 - 2026-10-31 STOP 3 done: Harel confirmed LinkedIn + WhatsApp previews. P3.4 QR deferred (no QR for now). Phase 4 (PostHog) on hold at Harel's request -> starting Phase 5 (allowed: depends only on P2.12).
+- 2026-10-31 P5.1: public/content.json per §8.6 (siteUrl + LinkedIn filled, approved hobbies card, contact slide without items). js/content.js deleted. Engine wrapped in init(C), reads meta + slides (theme, light boolean). guard.js now checks engineStarted at window load (content.json arrives later). window.deck exposes read-only state for debugging. All earlier tests re-run and pass; slides pixel-identical.
