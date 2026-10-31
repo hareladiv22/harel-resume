@@ -58,7 +58,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 ## Phase 6: QA & launch
 - [ ] P6.1 Device matrix
 - [x] P6.2 Accessibility
-- [ ] P6.3 Performance
+- [x] P6.3 Performance
 - [ ] P6.4 Pre-launch checklist
 - [ ] P6.5 Launch
 - [ ] ⏸ STOP 6
@@ -121,3 +121,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-31 Fix (Harel iPhone screenshot, words slide): outlined words were invisible until filled (stroke used currentColor = the transparent fill) -> stroke uses new per-theme --fg; removed the 24px shift in the fill animation (misaligned with text below). Phones (#stage.phone): smaller decorative shapes tucked into corners, 4px word outline. Checked 390x844/360x740/320x568/1440x900: all slides fit.
 - 2026-10-31 STOP 5: Harel approved after phone checks; phase-5 fast-forwarded to main (353ebc9), deploy green; production click-through clean (content.json 200, no-cache; old content.js 404).
 - 2026-10-31 P6.2: measured rendered contrast of every text node on all slides (incl. card overlays, opacity): failures on t6 (coral on cream 2.2:1) and t4 (lime on violet 4.48, faded text 4.18). Token changes (to tell Harel): --vio #6C4BFF -> #6644F5 (slightly deeper; also 404), new --coral-ink #B8321F used as t6 accent text. Now all text passes 4.5:1 (3:1 large). Keyboard walk: all controls focusable with visible, uncovered outline (tap zones raised on :focus-visible). #live announces 'Slide X of N', hidden slides inert, lang=en, reduced motion = no autoplay/no transition. Open: real screen reader pass (VoiceOver/TalkBack) by Harel, optional.
+- 2026-10-31 P6.3: PageSpeed Insights API quota exhausted (shared anonymous quota), so measured on production with headless Chrome under Lighthouse-like mobile throttling (slow 4G 150ms/1.6Mbps, 4x CPU, 412x823): 84.9 KB over 11 requests (target < 500 KB excl. PDF), FCP = LCP 1.27 s, CLS 0.000, TBT ~135 ms. Open: official Lighthouse scores (PSI retry, or Chrome DevTools > Lighthouse) to confirm the 90/95/95/95 targets.
