@@ -36,13 +36,19 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
 .slide.fit-1>*:not(.brand){zoom:.9}
 .slide.fit-2>*:not(.brand){zoom:.8}
 @keyframes drift{to{translate:-40px 60px}}
+/* phones (#stage.phone, set in fit()): smaller shapes tucked into the corners so they stay clear of the text */
+#stage.phone .slide::before{width:440px;height:440px;right:-250px;top:110px}
+#stage.phone .slide::after{width:180px;height:180px;border-radius:36px;left:-120px;bottom:150px}
+#stage.phone .w{-webkit-text-stroke-width:4px}
+/* --fg = the slide's text color (used for outlined text) */
+.slide{--fg:var(--cream)}
 .t1{background:var(--navy);--a:var(--vio);--hi:var(--lime)}
-.t2{background:var(--cream);--a:var(--lime);--hi:var(--vio);color:var(--navy)}
-.t3{background:var(--lime);--a:var(--coral);--hi:var(--vio);color:var(--navy)}
+.t2{background:var(--cream);--a:var(--lime);--hi:var(--vio);color:var(--navy);--fg:var(--navy)}
+.t3{background:var(--lime);--a:var(--coral);--hi:var(--vio);color:var(--navy);--fg:var(--navy)}
 .t4{background:var(--vio);--a:var(--navy);--hi:var(--lime)}
 .t5{background:var(--navy);--a:var(--coral);--hi:var(--lime)}
-.t6{background:var(--cream);--a:var(--vio);--hi:var(--coral);color:var(--navy)}
-.t7{background:var(--coral);--a:var(--cream);--hi:var(--navy);color:var(--navy)}
+.t6{background:var(--cream);--a:var(--vio);--hi:var(--coral);color:var(--navy);--fg:var(--navy)}
+.t7{background:var(--coral);--a:var(--cream);--hi:var(--navy);color:var(--navy);--fg:var(--navy)}
 .brand{position:absolute;bottom:70px;left:72px;font:600 40px Fraunces,Georgia,serif;z-index:2}
 .bars{position:absolute;top:48px;left:48px;right:48px;display:flex;gap:10px;z-index:20;color:var(--cream)}
 .bars.light{color:var(--navy)}
@@ -73,9 +79,10 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
 .ghost{align-self:flex-start;display:inline-flex;align-items:center;min-height:124px;padding:0 46px;border:3px solid currentColor;border-radius:999px;color:inherit;text-decoration:none;font:700 34px "Space Grotesk",sans-serif}
 .ghost:focus-visible{outline:4px solid var(--lime);outline-offset:6px}
 /* words */
-.w{font:600 230px/1 Fraunces,Georgia,serif;letter-spacing:-8px;color:transparent;-webkit-text-stroke:3px currentColor}
+/* big word: outline in the slide's text color (--fg), then fills with the accent. (currentColor would be the transparent fill.) */
+.w{font:600 230px/1 Fraunces,Georgia,serif;letter-spacing:-8px;color:transparent;-webkit-text-stroke:3px var(--fg)}
 :is(.on,.out) .w{animation:fill .6s forwards;animation-delay:calc(1s + var(--i)*1.5s)}
-@keyframes fill{to{color:var(--hi);-webkit-text-stroke-color:var(--hi);translate:24px 0}}
+@keyframes fill{to{color:var(--hi);-webkit-text-stroke-color:var(--hi)}}
 .wt{font:italic 500 46px/1.2 Fraunces,Georgia,serif;margin:-6px 0 34px;max-width:860px}
 /* cards */
 .cards{display:flex;flex-direction:column;gap:26px}

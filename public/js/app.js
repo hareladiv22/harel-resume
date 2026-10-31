@@ -77,7 +77,7 @@ const landscape=matchMedia("(orientation: landscape)");
 function fit(){
  const W=innerWidth,H=innerHeight,portrait=H>=W,dw=portrait&&W<600?960:1080;
  const k=Math.min(W/dw,H/1920),sw=portrait?W/k:1080,sh=portrait?H/k:1920,side=(W-sw*k)/2;
- stage.style.width=sw+"px";stage.style.height=sh+"px";
+ stage.style.width=sw+"px";stage.style.height=sh+"px";stage.classList.toggle("phone",dw===960);
  stage.style.transform=`translate(-50%,-50%) scale(${k})`;
  // Keep the mobile CV icon at least 46 CSS px on small phones (stage px shrink with the scale).
  stage.style.setProperty("--cvi",Math.max(124,46/k)+"px");
