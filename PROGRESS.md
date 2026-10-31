@@ -34,12 +34,12 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - [x] P3.1 CV download everywhere
 - [x] P3.2 Meta, Open Graph, icons
 - [x] P3.3 Traffic-source links
-- [ ] P3.4 QR code
+- [ ] P3.4 QR code (deferred by Harel 2026-10-31)
 - [x] P3.5 robots.txt, sitemap.xml
-- [ ] ⏸ STOP 3
+- [x] ⏸ STOP 3
 
 ## Phase 4: Analytics
-- [ ] P4.0 PostHog key from Harel
+- [ ] P4.0 PostHog key from Harel (Harel: wait for now, 2026-10-31)
 - [ ] P4.1 analytics.js
 - [ ] P4.2 Events
 - [ ] P4.3 Exclude Harel (notrack)
@@ -75,7 +75,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 | PostHog project key | waiting | |
 | OG image approved | received | approved 2026-10-29 |
 | Hobbies (optional) | received | Card approved: tag "Hobbies", title "Basketball & surfing" (no text) |
-| Tools approved (fontsource, qrcode, playwright) | waiting | |
+| Tools approved (fontsource, qrcode, playwright) | not needed so far | fonts downloaded directly; images via installed Chrome; qrcode deferred with P3.4 |
 
 ## Log
 - 2026-10-29 P0.0: created all Appendix A files, .gitignore, CLAUDE.md, PROGRESS.md, public/assets/cv/.gitkeep. Open: `node --check` AC pending until Node is installed (P0.1); visual AC needs Harel (Live Server).
@@ -106,3 +106,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 P3.3: ?ref= read on load into window.visitRef (linkedin/cv/whatsapp/email/qr; unknown -> other; none -> direct), removed from URL with replaceState keeping other params and hash. README link table added. Tested headless: /?ref=linkedin#3 -> /#3, ref linkedin. deck_view wiring in P4.
 - 2026-10-29 P3.5: robots.txt (allow all + sitemap) and sitemap.xml (one URL) with https://harel-resume.vercel.app. XML validated. Open: 200 on production after merge (STOP 3).
 - 2026-10-29 STOP 3 (partial): Harel approved OG image + merge; phase-3 fast-forwarded to main (eff70cc), deploy green. Production: robots, sitemap, og.png, icons 200; /nope 404; click-through with zero console errors. Open: Harel checks LinkedIn Post Inspector + WhatsApp preview; P3.4 QR waits for qrcode tool decision.
+- 2026-10-31 STOP 3 done: Harel confirmed LinkedIn + WhatsApp previews. P3.4 QR deferred (no QR for now). Phase 4 (PostHog) on hold at Harel's request -> starting Phase 5 (allowed: depends only on P2.12).
