@@ -59,7 +59,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - [ ] P6.1 Device matrix
 - [x] P6.2 Accessibility
 - [x] P6.3 Performance
-- [ ] P6.4 Pre-launch checklist
+- [x] P6.4 Pre-launch checklist
 - [ ] P6.5 Launch
 - [ ] ⏸ STOP 6
 
@@ -122,3 +122,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-31 STOP 5: Harel approved after phone checks; phase-5 fast-forwarded to main (353ebc9), deploy green; production click-through clean (content.json 200, no-cache; old content.js 404).
 - 2026-10-31 P6.2: measured rendered contrast of every text node on all slides (incl. card overlays, opacity): failures on t6 (coral on cream 2.2:1) and t4 (lime on violet 4.48, faded text 4.18). Token changes (to tell Harel): --vio #6C4BFF -> #6644F5 (slightly deeper; also 404), new --coral-ink #B8321F used as t6 accent text. Now all text passes 4.5:1 (3:1 large). Keyboard walk: all controls focusable with visible, uncovered outline (tap zones raised on :focus-visible). #live announces 'Slide X of N', hidden slides inert, lang=en, reduced motion = no autoplay/no transition. Open: real screen reader pass (VoiceOver/TalkBack) by Harel, optional.
 - 2026-10-31 P6.3: PageSpeed Insights API quota exhausted (shared anonymous quota), so measured on production with headless Chrome under Lighthouse-like mobile throttling (slow 4G 150ms/1.6Mbps, 4x CPU, 412x823): 84.9 KB over 11 requests (target < 500 KB excl. PDF), FCP = LCP 1.27 s, CLS 0.000, TBT ~135 ms. Open: official Lighthouse scores (PSI retry, or Chrome DevTools > Lighthouse) to confirm the 90/95/95/95 targets.
+- 2026-10-31 P6.4 checklist: npm run check OK, no TODO | CV: Harel approved current PDF as is (still has 'Senior Maneger', 'Im', 'Linkdin') | contacts open+copy tested headless, phone/WhatsApp on device by Harel | OG previews confirmed by Harel | PostHog: deferred (N/A) | 404/robots/sitemap 200 | README updated (tools, cost) | Cost audit: Vercel Hobby docs (updated 2026-09-14) re-checked today: free, no billing cycle, over-limit = paused, non-commercial only; GitHub free; no PostHog; no paid add-ons | Commercial check: no service offers, prices, ads or payment links in content.
