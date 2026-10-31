@@ -50,7 +50,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 ## Phase 5: Content as JSON
 - [x] P5.1 content.json
 - [x] P5.2 Loading + fallback
-- [ ] P5.3 validate-content.mjs as build
+- [x] P5.3 validate-content.mjs as build
 - [ ] P5.4 Runtime overflow guard
 - [ ] P5.5 Owner editing guide
 - [ ] ⏸ STOP 5
@@ -109,3 +109,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-31 STOP 3 done: Harel confirmed LinkedIn + WhatsApp previews. P3.4 QR deferred (no QR for now). Phase 4 (PostHog) on hold at Harel's request -> starting Phase 5 (allowed: depends only on P2.12).
 - 2026-10-31 P5.1: public/content.json per §8.6 (siteUrl + LinkedIn filled, approved hobbies card, contact slide without items). js/content.js deleted. Engine wrapped in init(C), reads meta + slides (theme, light boolean). guard.js now checks engineStarted at window load (content.json arrives later). window.deck exposes read-only state for debugging. All earlier tests re-run and pass; slides pixel-identical.
 - 2026-10-31 P5.2: fetch('/content.json', no-cache) with 10s abort; any failure -> console.error with reason + engineFail() -> static fallback. Tested headless: 404 (= renamed file), invalid JSON, network down, bad theme, hanging request (fallback at 10s) -> fallback, never blank.
+- 2026-10-31 P5.3: scripts/validate-content.mjs (Node built-ins) = Vercel build. Parse errors: line/column + caret + EN/HE hint. Schema (§8.6), limits (§11), unknown-field typo check, em/br-only markup, placeholders (TODO, your-handle, example.com, [..]), contact data only in meta, meta formats, CV file exists. Cross-checks: index.html title/description/canonical/og:* and fallback values, robots.txt, sitemap.xml vs meta; no TODO in public text files. package.json scripts per §8.2. Tested on copies: missing comma, trailing comma, over-limit, TODO, bad theme/light/d, typo field, bad markup, bad email, contact in slides, meta drift -> exit 1 with clear messages; unchanged -> exit 0. Note for Harel: changing meta name/title/tagline/contact also needs index.html (static copies) -> README explains.
