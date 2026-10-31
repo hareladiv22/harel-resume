@@ -22,6 +22,9 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
 .slide>*:not(.brand){position:relative;z-index:11;pointer-events:none}
 /* #stage raises specificity above the rule before it, also for links that are direct children of a slide */
 #stage .slide a,#stage .slide button{pointer-events:auto}
+/* overflow guard (app.js fitText): shrink a slide's content when it doesn't fit */
+.slide.fit-1>*:not(.brand){zoom:.9}
+.slide.fit-2>*:not(.brand){zoom:.8}
 @keyframes drift{to{translate:-40px 60px}}
 .t1{background:var(--navy);--a:var(--vio);--hi:var(--lime)}
 .t2{background:var(--cream);--a:var(--lime);--hi:var(--vio);color:var(--navy)}

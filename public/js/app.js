@@ -115,6 +115,17 @@ function bars(){
  b.innerHTML=S.map((s,i)=>`<i class="${i<cur?"done":i===cur?"cur":""}" data-i="${i}"><b></b></i>`).join("");
  b.querySelectorAll("i").forEach((e,i)=>e.style.setProperty("--d",(+S[i].d||8)+"s"));
 }
+// Overflow guard (backup for the build-time length limits): if a slide's content is taller than the
+// space inside its padding, shrink it ~10% (fit-1), then ~20% (fit-2). Measured once, on first show
+// (entrance animations haven't moved anything yet at that moment).
+function fitText(e,n){
+ if(e.dataset.fit)return;
+ for(const c of ["","fit-1","fit-2"]){
+  e.classList.remove("fit-1","fit-2");if(c)e.classList.add(c);
+  if(e.scrollHeight<=e.clientHeight){e.dataset.fit=c||"ok";return}
+ }
+ e.dataset.fit="over";console.warn("overflow",n+1);
+}
 // First manual interaction: stop autoplay for good and freeze the bars.
 function manual(){if(!autoplay)return;autoplay=false;clearTimeout(timer);timer=null;bars()}
 function show(n){
@@ -122,7 +133,7 @@ function show(n){
  // The visitor's own pauses (hold, Space) end on a new slide; system ones (hidden tab, rotate hint) stay.
  holds.delete("hold");holds.delete("space");
  els.forEach(e=>{e.classList.remove("on");e.inert=true});
- const e=els[n];e.inert=false;void e.offsetWidth;e.classList.add("on");count(e);
+ const e=els[n];e.inert=false;void e.offsetWidth;e.classList.add("on");fitText(e,n);count(e);
  $("#live").textContent=`Slide ${n+1} of ${S.length}`;
  // replaceState (not pushState): Back leaves the site instead of stepping through slides.
  history.replaceState(null,"",location.pathname+location.search+"#"+(n+1));
