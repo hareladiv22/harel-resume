@@ -49,7 +49,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 
 ## Phase 5: Content as JSON
 - [x] P5.1 content.json
-- [ ] P5.2 Loading + fallback
+- [x] P5.2 Loading + fallback
 - [ ] P5.3 validate-content.mjs as build
 - [ ] P5.4 Runtime overflow guard
 - [ ] P5.5 Owner editing guide
@@ -108,3 +108,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-29 STOP 3 (partial): Harel approved OG image + merge; phase-3 fast-forwarded to main (eff70cc), deploy green. Production: robots, sitemap, og.png, icons 200; /nope 404; click-through with zero console errors. Open: Harel checks LinkedIn Post Inspector + WhatsApp preview; P3.4 QR waits for qrcode tool decision.
 - 2026-10-31 STOP 3 done: Harel confirmed LinkedIn + WhatsApp previews. P3.4 QR deferred (no QR for now). Phase 4 (PostHog) on hold at Harel's request -> starting Phase 5 (allowed: depends only on P2.12).
 - 2026-10-31 P5.1: public/content.json per §8.6 (siteUrl + LinkedIn filled, approved hobbies card, contact slide without items). js/content.js deleted. Engine wrapped in init(C), reads meta + slides (theme, light boolean). guard.js now checks engineStarted at window load (content.json arrives later). window.deck exposes read-only state for debugging. All earlier tests re-run and pass; slides pixel-identical.
+- 2026-10-31 P5.2: fetch('/content.json', no-cache) with 10s abort; any failure -> console.error with reason + engineFail() -> static fallback. Tested headless: 404 (= renamed file), invalid JSON, network down, bad theme, hanging request (fallback at 10s) -> fallback, never blank.

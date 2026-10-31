@@ -193,7 +193,9 @@ window.deck={get cur(){return cur},get autoplay(){return autoplay},holds};
 
 /* ===== START: load the text, then build the deck. Any failure → static fallback (guard.js). ===== */
 window.engineStarted=true;
-fetch("/content.json",{cache:"no-cache"})
+// Give up after 10s (e.g. a stuck mobile connection) rather than show an empty stage forever.
+const loading=new AbortController();setTimeout(()=>loading.abort(),10000);
+fetch("/content.json",{cache:"no-cache",signal:loading.signal})
  .then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json()})
  .then(init)
  .catch(err=>{console.error("Site could not start (content.json):",err);window.engineFail()});
