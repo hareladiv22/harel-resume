@@ -4,7 +4,8 @@
 @font-face{font-family:"Space Grotesk";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/space-grotesk-latin-500-normal.woff2) format("woff2")}
 @font-face{font-family:"Space Grotesk";font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/space-grotesk-latin-700-normal.woff2) format("woff2")}
 :root{--navy:#14123A;--vio:#6C4BFF;--coral:#FF6B57;--lime:#D6FF5C;--cream:#FFF6E8;--e:cubic-bezier(.16,1,.3,1);--pop:cubic-bezier(.34,1.56,.64,1)}
-*{box-sizing:border-box;margin:0}
+/* no grey/blue box flashing over the tap zones on mobile (keyboard focus still shows via :focus-visible) */
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:none}
 /* fixed: the unscaled 1080px stage must not widen the mobile layout viewport */
 #stage{position:fixed;left:50%;top:50%;width:1080px;height:1920px;transform-origin:center;overflow:hidden;font-family:"Space Grotesk",system-ui,sans-serif;color:var(--cream);
@@ -102,7 +103,8 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
 .note{font:500 26px "Space Grotesk",sans-serif;opacity:.6}
 .row a:focus-visible,.cp:focus-visible,.cvb:focus-visible,.nav:focus-visible{outline:4px solid var(--lime);outline-offset:6px}
 /* nav + wipe */
-.nav{position:absolute;top:120px;bottom:0;border:0;background:none;cursor:pointer;z-index:10}
+.nav{position:absolute;top:120px;bottom:0;border:0;background:none;cursor:pointer;z-index:10;outline:none}
+.nav:focus-visible{outline:4px solid var(--lime);outline-offset:-8px}
 #prev{left:0;width:35%}#next{right:0;width:65%}
 #stage.last #next{display:none}#stage.last #prev{width:6%}
 #wipe{position:absolute;z-index:30;left:calc(50% - 60px);top:calc(50% - 60px);width:120px;height:120px;border-radius:50%;background:var(--lime);transform:scale(0);pointer-events:none}
