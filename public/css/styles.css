@@ -14,12 +14,21 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
  touch-action:pinch-zoom;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 /* contact values stay selectable (long-press to copy) */
 #stage .row a{user-select:text;-webkit-user-select:text;-webkit-touch-callout:default}
-.slide{position:absolute;inset:0;display:none;padding:170px 72px 160px;overflow:hidden}
-.slide.on{display:flex;flex-direction:column;justify-content:center;gap:30px}
+/* Slides sit above the tap zones (#prev/#next, z 1) but let taps through (pointer-events:none),
+   so only their links and buttons catch clicks. */
+.slide{position:absolute;inset:0;display:none;padding:170px 72px 160px;overflow:hidden;pointer-events:none}
+.slide.on,.slide.out{display:flex;flex-direction:column;justify-content:center;gap:30px}
+/* Soft transition: the new slide fades and slides in (from the right going forward, --dir 1;
+   from the left going back, --dir -1) over the old one, which drifts slightly the other way. */
+.slide.on{z-index:3}
+.slide.out{z-index:2}
+.slide.enter{animation:enter .6s var(--e) both}
+.slide.out{animation:leave .6s var(--e) both}
+@keyframes enter{from{opacity:0;transform:translateX(calc(var(--dir,1)*120px))}}
+@keyframes leave{to{transform:translateX(calc(var(--dir,1)*-80px))}}
 .slide::before{content:"";position:absolute;width:640px;height:640px;border-radius:50%;background:var(--a);right:-260px;top:180px;animation:drift 7s ease-in-out infinite alternate}
 .slide::after{content:"";position:absolute;width:260px;height:260px;border-radius:44px;background:var(--a);opacity:.5;left:-90px;bottom:260px;animation:drift 5s ease-in-out infinite alternate-reverse}
-/* Slide content sits above the tap zones (#prev/#next, z 10) but lets taps through,
-   except on links and buttons, which must work on the first tap. */
+/* Slide content above the decorative shapes; taps pass through except on links and buttons. */
 .slide>*:not(.brand){position:relative;z-index:11;pointer-events:none}
 /* #stage raises specificity above the rule before it, also for links that are direct children of a slide */
 #stage .slide a,#stage .slide button{pointer-events:auto}
@@ -48,11 +57,11 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
 .bars.still i.done b{opacity:.5}
 /* motion */
 .rise{opacity:0}
-.on .rise{animation:rise .85s var(--e) forwards;animation-delay:calc(var(--i,0)*.14s + .15s)}
+:is(.on,.out) .rise{animation:rise .85s var(--e) forwards;animation-delay:calc(var(--i,0)*.14s + .15s)}
 @keyframes rise{from{opacity:0;transform:translateY(48px) scale(.97)}to{opacity:1;transform:none}}
 .ln{display:block;overflow:hidden;padding-bottom:.1em}
 .ln b{display:inline-block;transform:translateY(115%);font-weight:inherit}
-.on .ln b{animation:up .9s var(--e) forwards;animation-delay:calc(var(--i)*.12s + .1s)}
+:is(.on,.out) .ln b{animation:up .9s var(--e) forwards;animation-delay:calc(var(--i)*.12s + .1s)}
 @keyframes up{to{transform:none}}
 .big{font:600 150px/.95 Fraunces,Georgia,serif;letter-spacing:-4px}
 .big em,.hd em{font-style:italic;color:var(--hi)}
@@ -65,7 +74,7 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
 .ghost:focus-visible{outline:4px solid var(--lime);outline-offset:6px}
 /* words */
 .w{font:600 230px/1 Fraunces,Georgia,serif;letter-spacing:-8px;color:transparent;-webkit-text-stroke:3px currentColor}
-.on .w{animation:fill .6s forwards;animation-delay:calc(1s + var(--i)*1.5s)}
+:is(.on,.out) .w{animation:fill .6s forwards;animation-delay:calc(1s + var(--i)*1.5s)}
 @keyframes fill{to{color:var(--hi);-webkit-text-stroke-color:var(--hi);translate:24px 0}}
 .wt{font:italic 500 46px/1.2 Fraunces,Georgia,serif;margin:-6px 0 34px;max-width:860px}
 /* cards */
@@ -84,7 +93,7 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
 /* timeline */
 .tl{position:relative;padding-left:74px;display:flex;flex-direction:column;gap:46px}
 .tl::before{content:"";position:absolute;left:16px;top:10px;bottom:10px;width:5px;border-radius:3px;background:var(--hi);transform-origin:top;transform:scaleY(0)}
-.on .tl::before{animation:grow 3.4s var(--e) .2s forwards}
+:is(.on,.out) .tl::before{animation:grow 3.4s var(--e) .2s forwards}
 @keyframes grow{to{transform:none}}
 .it{position:relative}
 .it::before{content:"";position:absolute;left:-68px;top:6px;width:36px;height:36px;border-radius:50%;background:var(--hi);box-shadow:0 0 0 8px rgba(255,255,255,.15)}
@@ -102,14 +111,11 @@ html,body{height:100%;background:#07061c;overflow:hidden;overscroll-behavior:non
 .cvb{margin-top:20px;text-decoration:none}
 .note{font:500 26px "Space Grotesk",sans-serif;opacity:.6}
 .row a:focus-visible,.cp:focus-visible,.cvb:focus-visible,.nav:focus-visible{outline:4px solid var(--lime);outline-offset:6px}
-/* nav + wipe */
-.nav{position:absolute;top:120px;bottom:0;border:0;background:none;cursor:pointer;z-index:10;outline:none}
+/* tap zones: under the slides (z 1), which let taps through to them */
+.nav{position:absolute;top:120px;bottom:0;border:0;background:none;cursor:pointer;z-index:1;outline:none}
 .nav:focus-visible{outline:4px solid var(--lime);outline-offset:-8px}
 #prev{left:0;width:35%}#next{right:0;width:65%}
 #stage.last #next{display:none}#stage.last #prev{width:6%}
-#wipe{position:absolute;z-index:30;left:calc(50% - 60px);top:calc(50% - 60px);width:120px;height:120px;border-radius:50%;background:var(--lime);transform:scale(0);pointer-events:none}
-#wipe.go{animation:wipe .75s var(--e) forwards}
-@keyframes wipe{0%{transform:scale(0)}55%{transform:scale(40)}100%{transform:scale(40);opacity:0}}
 /* mobile CV icon (stage px): above tap zones, below bars; hidden on the contact slide and when rails show */
 .cvi{position:absolute;top:80px;right:48px;z-index:15;width:var(--cvi,124px);height:var(--cvi,124px);border-radius:50%;display:grid;place-items:center;background:var(--lime);color:var(--navy)}
 .cvi svg{width:60px;height:60px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -157,5 +163,5 @@ html.failed #fallback{display:block!important}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (prefers-reduced-motion:reduce){
  *,*::before,*::after{animation:none!important;transition:none!important}
- .rise{opacity:1}.ln b{transform:none}.w{color:var(--hi);-webkit-text-stroke-color:var(--hi)}.tl::before{transform:none}#wipe{display:none}
+ .rise{opacity:1}.ln b{transform:none}.w{color:var(--hi);-webkit-text-stroke-color:var(--hi)}.tl::before{transform:none}.slide.out{display:none}
 }

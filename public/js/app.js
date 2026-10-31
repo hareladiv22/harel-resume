@@ -38,7 +38,7 @@ $("#slides").innerHTML=S.map((s,i)=>{
 }).join("");
 document.querySelectorAll("[data-s]").forEach(e=>e.style.setProperty("--i",e.dataset.s));
 const els=[...document.querySelectorAll(".slide")], LAST=S.length-1;
-let cur=-1,timer,busy=false;
+let cur=-1,timer;
 // Traffic source from ?ref=… (kept in memory for analytics), then removed from the URL
 // so a copied/forwarded link doesn't carry it. No ref → "direct"; unknown → "other".
 const REFS=["linkedin","cv","whatsapp","email","qr"],params=new URLSearchParams(location.search);
@@ -135,12 +135,16 @@ function fitText(e,n){
 }
 // First manual interaction: stop autoplay for good and freeze the bars.
 function manual(){if(!autoplay)return;autoplay=false;clearTimeout(timer);timer=null;bars()}
-function show(n){
- cur=n;
+// show(n, dir): dir = 1 (forward) / -1 (back) for the soft slide-in; 0 = no transition (first load).
+function show(n,dir=0){
+ const prev=cur>=0?els[cur]:null;cur=n;
  // The visitor's own pauses (hold, Space) end on a new slide; system ones (hidden tab, rotate hint) stay.
  holds.delete("hold");holds.delete("space");
- els.forEach(e=>{e.classList.remove("on");e.inert=true});
- const e=els[n];e.inert=false;void e.offsetWidth;e.classList.add("on");fitText(e,n);count(e);
+ els.forEach(e=>{if(e!==prev)e.classList.remove("out");e.classList.remove("on","enter");e.inert=true});
+ // Soft transition: the old slide stays underneath ("out") while the new one fades and slides in over it.
+ if(prev&&dir&&!reduce){prev.style.setProperty("--dir",dir);prev.classList.add("out");clearTimeout(prev.outT);prev.outT=setTimeout(()=>prev.classList.remove("out"),650)}
+ const e=els[n];e.inert=false;e.style.setProperty("--dir",dir||1);void e.offsetWidth;
+ e.classList.add("on");if(dir&&!reduce)e.classList.add("enter");fitText(e,n);count(e);
  $("#live").textContent=`Slide ${n+1} of ${S.length}`;
  // replaceState (not pushState): Back leaves the site instead of stepping through slides.
  history.replaceState(null,"",location.pathname+location.search+"#"+(n+1));
@@ -149,19 +153,14 @@ function show(n){
  bars();arm(S[n].d*1000);
  holds.size?freeze():thaw();
 }
-// go(n): animated move to slide n. auto=true only when the autoplay timer calls it.
-// A move requested during the transition is queued, so a quick double tap moves two slides.
-let target=-1,queued=-1;
+// go(n): move to slide n right away (the transition plays on top). auto=true only from the autoplay timer.
 function go(n,auto){
  if(!auto)manual();
  n=Math.max(0,Math.min(LAST,n));
- if(busy){if(n!==target)queued=n;return}
- if(n===cur)return;busy=true;target=n;
- const w=$("#wipe");w.classList.remove("go");void w.offsetWidth;w.classList.add("go");
- setTimeout(()=>{show(n);busy=false;if(queued>=0){const q=queued;queued=-1;go(q,true)}},reduce?0:300);
+ if(n!==cur)show(n,n>cur?1:-1);
 }
-// step(±1): relative move, counted from where we are heading (not where we are) during a transition.
-function step(d,auto){go((busy?(queued>=0?queued:target):cur)+d,auto)}
+// step(±1): relative move. Moves are instant, so a quick double tap moves two slides.
+function step(d,auto){go(cur+d,auto)}
 let skip=false;
 $("#next").onclick=()=>{if(!skip)step(1)};$("#prev").onclick=()=>{if(!skip)step(-1)};
 $("#bars").onclick=e=>{const i=e.target.closest("i");if(i)go(+i.dataset.i)};
