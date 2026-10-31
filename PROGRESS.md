@@ -57,7 +57,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 
 ## Phase 6: QA & launch
 - [ ] P6.1 Device matrix
-- [ ] P6.2 Accessibility
+- [x] P6.2 Accessibility
 - [ ] P6.3 Performance
 - [ ] P6.4 Pre-launch checklist
 - [ ] P6.5 Launch
@@ -120,3 +120,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-31 Transition (Harel chose 'soft fade'): green circle wipe removed. New slide fades + slides in (direction-aware, 0.6s) over the old one, which stays underneath ('out') and drifts slightly; old slide keeps its entrance-animation state while leaving. Moves are instant (no 300ms wait/queue), so double tap = 2 slides and bar end = slide change. Layering: slides z 3/2 with pointer-events none, tap zones z 1 below them, links/buttons pointer-events auto. Reduced motion: instant switch. All regression tests pass (autoplay, pause timing, keys, links on top, touch, contact, CSP).
 - 2026-10-31 Fix (Harel iPhone screenshot, words slide): outlined words were invisible until filled (stroke used currentColor = the transparent fill) -> stroke uses new per-theme --fg; removed the 24px shift in the fill animation (misaligned with text below). Phones (#stage.phone): smaller decorative shapes tucked into corners, 4px word outline. Checked 390x844/360x740/320x568/1440x900: all slides fit.
 - 2026-10-31 STOP 5: Harel approved after phone checks; phase-5 fast-forwarded to main (353ebc9), deploy green; production click-through clean (content.json 200, no-cache; old content.js 404).
+- 2026-10-31 P6.2: measured rendered contrast of every text node on all slides (incl. card overlays, opacity): failures on t6 (coral on cream 2.2:1) and t4 (lime on violet 4.48, faded text 4.18). Token changes (to tell Harel): --vio #6C4BFF -> #6644F5 (slightly deeper; also 404), new --coral-ink #B8321F used as t6 accent text. Now all text passes 4.5:1 (3:1 large). Keyboard walk: all controls focusable with visible, uncovered outline (tap zones raised on :focus-visible). #live announces 'Slide X of N', hidden slides inert, lang=en, reduced motion = no autoplay/no transition. Open: real screen reader pass (VoiceOver/TalkBack) by Harel, optional.

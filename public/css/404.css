@@ -1,5 +1,5 @@
 /* 404 page: same tokens as styles.css, no fonts loaded (fallbacks are fine here) */
-:root{--navy:#14123A;--vio:#6C4BFF;--lime:#D6FF5C;--cream:#FFF6E8}
+:root{--navy:#14123A;--vio:#6644F5;--lime:#D6FF5C;--cream:#FFF6E8}
 *{box-sizing:border-box;margin:0}
 html,body{height:100%}
 body{display:flex;align-items:center;justify-content:center;padding:24px;background:var(--navy);color:var(--cream);font-family:"Space Grotesk",system-ui,sans-serif;overflow:hidden}
