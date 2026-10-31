@@ -118,7 +118,8 @@ S.forEach((s, i) => {
       list(s, 'items', w, 2, 4).forEach((o, j) => { const p = `${w}.items[${j}]`; if (!isObj(o)) return fail(p, 'must be { … }'); onlyKeys(o, ['tag', 'title', 'text', 'big'], p); text(o, 'tag', p, { max: 28 }); text(o, 'title', p, { max: 40 }); text(o, 'text', p, { max: 120, optional: true }); text(o, 'big', p, { max: 12, optional: true }); });
       break;
     case 'contact':
-      text(s, 'sub', w, { max: 90 }); text(s, 'privacyNote', w, { max: 50 });
+      // privacyNote is optional: removed while there is no analytics (Harel, 2026-10-31)
+      text(s, 'sub', w, { max: 90 }); text(s, 'privacyNote', w, { max: 50, optional: true });
       break;
   }
 });

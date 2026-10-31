@@ -88,8 +88,7 @@
     {
       "type": "contact", "theme": "t4", "light": false, "d": 8,
       "h": "Let’s <em>talk.</em>",
-      "sub": "Hiring, collaborating, or just curious? My inbox is open.",
-      "privacyNote": "Anonymous, cookie-free analytics."
+      "sub": "Hiring, collaborating, or just curious? My inbox is open."
     }
   ]
 }
