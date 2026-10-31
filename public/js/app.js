@@ -69,15 +69,22 @@ function resume(why){
  if(!holds.delete(why)||holds.size)return;
  thaw();arm(left);
 }
-// Scale the 1080×1920 stage to the window. Show desktop rails when each free side is ≥ 220px in landscape.
+// Scale the stage to the window.
+// Landscape (desktop): a fixed 1080×1920 stage, centered; rails beside it when each free side is ≥ 220px.
+// Portrait (phones, tablets): the stage fills the whole screen, no black bars. It keeps at least the
+// design size and grows in the other direction. Phones use a 960-wide design so text is ~12% larger.
 const landscape=matchMedia("(orientation: landscape)");
 function fit(){
- const k=Math.min(innerWidth/1080,innerHeight/1920),side=(innerWidth-1080*k)/2;
+ const W=innerWidth,H=innerHeight,portrait=H>=W,dw=portrait&&W<600?960:1080;
+ const k=Math.min(W/dw,H/1920),sw=portrait?W/k:1080,sh=portrait?H/k:1920,side=(W-sw*k)/2;
+ stage.style.width=sw+"px";stage.style.height=sh+"px";
  stage.style.transform=`translate(-50%,-50%) scale(${k})`;
  // Keep the mobile CV icon at least 46 CSS px on small phones (stage px shrink with the scale).
  stage.style.setProperty("--cvi",Math.max(124,46/k)+"px");
  document.body.style.setProperty("--side",side+"px");
  document.body.classList.toggle("rails",landscape.matches&&side>=220);
+ // The stage size changed, so re-check whether the current slide's text fits.
+ if(sw!==fit.w||sh!==fit.h){fit.w=sw;fit.h=sh;els.forEach(e=>{delete e.dataset.fit;e.classList.remove("fit-1","fit-2")});if(cur>=0)fitText(els[cur],cur)}
  rotateHint();
 }
 // Small touch screen held sideways → overlay with "Continue anyway" (dismissed for the visit).
