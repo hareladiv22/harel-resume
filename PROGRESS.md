@@ -53,7 +53,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - [x] P5.3 validate-content.mjs as build
 - [x] P5.4 Runtime overflow guard
 - [x] P5.5 Owner editing guide
-- [ ] ⏸ STOP 5
+- [x] ⏸ STOP 5
 
 ## Phase 6: QA & launch
 - [ ] P6.1 Device matrix
@@ -119,3 +119,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-10-31 Fix (Harel screenshot, Android): blue tap-highlight box flashed over the tap zones on every tap -> -webkit-tap-highlight-color: transparent; tap zones show an inset lime outline only for keyboard focus (:focus-visible).
 - 2026-10-31 Transition (Harel chose 'soft fade'): green circle wipe removed. New slide fades + slides in (direction-aware, 0.6s) over the old one, which stays underneath ('out') and drifts slightly; old slide keeps its entrance-animation state while leaving. Moves are instant (no 300ms wait/queue), so double tap = 2 slides and bar end = slide change. Layering: slides z 3/2 with pointer-events none, tap zones z 1 below them, links/buttons pointer-events auto. Reduced motion: instant switch. All regression tests pass (autoplay, pause timing, keys, links on top, touch, contact, CSP).
 - 2026-10-31 Fix (Harel iPhone screenshot, words slide): outlined words were invisible until filled (stroke used currentColor = the transparent fill) -> stroke uses new per-theme --fg; removed the 24px shift in the fill animation (misaligned with text below). Phones (#stage.phone): smaller decorative shapes tucked into corners, 4px word outline. Checked 390x844/360x740/320x568/1440x900: all slides fit.
+- 2026-10-31 STOP 5: Harel approved after phone checks; phase-5 fast-forwarded to main (353ebc9), deploy green; production click-through clean (content.json 200, no-cache; old content.js 404).
