@@ -3,10 +3,10 @@
 @font-face{font-family:Fraunces;font-style:italic;font-weight:500;font-display:swap;src:url(/fonts/fraunces-latin-500-italic.woff2) format("woff2")}
 @font-face{font-family:"Space Grotesk";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/space-grotesk-latin-500-normal.woff2) format("woff2")}
 @font-face{font-family:"Space Grotesk";font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/space-grotesk-latin-700-normal.woff2) format("woff2")}
-:root{--ink:#241A14;--cobalt:#2E4BD6;--tang-ink:#A33A12;--tang:#FF7A2F;--sun:#FFCF5A;--paper:#FBF3E6;--sky:#8EC5FF;--e:cubic-bezier(.16,1,.3,1);--pop:cubic-bezier(.34,1.56,.64,1)}
+:root{--ink:#0B1B3A;--cobalt:#1F4FD8;--blue-ink:#1A3D9E;--azure:#5AAEF2;--sky:#8CC4FF;--paper:#F1F6FF;--pale:#CFE5FF;--e:cubic-bezier(.16,1,.3,1);--pop:cubic-bezier(.34,1.56,.64,1)}
 /* no grey/blue box flashing over the tap zones on mobile (keyboard focus still shows via :focus-visible) */
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;background:#140E0A;overflow:hidden;overscroll-behavior:none}
+html,body{height:100%;background:#050D1F;overflow:hidden;overscroll-behavior:none}
 /* fixed: the unscaled 1080px stage must not widen the mobile layout viewport */
 #stage{position:fixed;left:50%;top:50%;width:1080px;height:1920px;transform-origin:center;overflow:hidden;font-family:"Space Grotesk",system-ui,sans-serif;color:var(--paper);
  /* pinch-zoom (not manipulation): no double-tap zoom, pinch still allowed, and the browser never
@@ -42,18 +42,18 @@ html,body{height:100%;background:#140E0A;overflow:hidden;overscroll-behavior:non
 #stage.phone .w{-webkit-text-stroke-width:4px}
 /* --fg = the slide's text color (used for outlined text) */
 .slide{--fg:var(--paper)}
-.t1{background:var(--ink);--a:var(--cobalt);--hi:var(--sun)}
-.t2{background:var(--paper);--a:var(--sun);--hi:var(--cobalt);color:var(--ink);--fg:var(--ink)}
-.t3{background:var(--sun);--a:var(--tang);--hi:var(--cobalt);color:var(--ink);--fg:var(--ink)}
-.t4{background:var(--cobalt);--a:var(--ink);--hi:var(--sun)}
-.t5{background:var(--ink);--a:var(--tang);--hi:var(--sky)}
-.t6{background:var(--paper);--a:var(--cobalt);--hi:var(--tang-ink);color:var(--ink);--fg:var(--ink)}
-.t7{background:var(--tang);--a:var(--paper);--hi:var(--ink);color:var(--ink);--fg:var(--ink)}
+.t1{background:var(--ink);--a:var(--cobalt);--hi:var(--sky)}
+.t2{background:var(--paper);--a:var(--sky);--hi:var(--cobalt);color:var(--ink);--fg:var(--ink)}
+.t3{background:var(--pale);--a:var(--azure);--hi:var(--blue-ink);color:var(--ink);--fg:var(--ink)}
+.t4{background:var(--cobalt);--a:var(--ink);--hi:var(--pale)}
+.t5{background:var(--ink);--a:var(--azure);--hi:var(--pale)}
+.t6{background:var(--paper);--a:var(--cobalt);--hi:var(--blue-ink);color:var(--ink);--fg:var(--ink)}
+.t7{background:var(--azure);--a:var(--paper);--hi:var(--ink);color:var(--ink);--fg:var(--ink)}
 .brand{position:absolute;bottom:70px;left:72px;font:600 40px Fraunces,Georgia,serif;z-index:2}
 .bars{position:absolute;top:48px;left:48px;right:48px;display:flex;gap:10px;z-index:20;color:var(--paper)}
 .bars.light{color:var(--ink)}
 .bars i{flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.28);overflow:hidden;cursor:pointer}
-.bars.light i{background:rgba(36,26,20,.18)}
+.bars.light i{background:rgba(11,27,58,.18)}
 .bars b{display:block;height:100%;width:0;background:currentColor}
 .bars i.done b{width:100%}
 .bars i.cur b{animation:bar var(--d) linear forwards}
@@ -75,7 +75,7 @@ html,body{height:100%;background:#140E0A;overflow:hidden;overscroll-behavior:non
 .is-hero .big{font:700 184px/.9 "Space Grotesk",system-ui,sans-serif;letter-spacing:-7px;text-transform:uppercase}
 .is-hero .big em{font-style:normal}
 .slide.is-hero::before{width:600px;height:600px;right:-230px;top:150px;background:var(--cobalt)}
-.slide.is-hero::after{width:340px;height:340px;border-radius:100% 0 0 0;left:auto;right:0;bottom:0;animation:none;background:var(--tang);opacity:1}
+.slide.is-hero::after{width:340px;height:340px;border-radius:100% 0 0 0;left:auto;right:0;bottom:0;animation:none;background:var(--azure);opacity:1}
 #stage.phone .slide.is-hero::before{width:460px;height:460px;right:-220px;top:110px}
 #stage.phone .slide.is-hero::after{width:250px;height:250px;border-radius:100% 0 0 0;left:auto;right:0;bottom:0}
 .hd{font:600 92px/1 Fraunces,Georgia,serif;letter-spacing:-2px;margin-bottom:14px}
@@ -84,7 +84,7 @@ html,body{height:100%;background:#140E0A;overflow:hidden;overscroll-behavior:non
 .t2 .pill,.t3 .pill,.t6 .pill{color:var(--paper);background:var(--ink)}
 /* secondary button (hero CV): outlined pill, ~44 CSS px tall on a phone */
 .ghost{align-self:flex-start;display:inline-flex;align-items:center;min-height:124px;padding:0 46px;border:3px solid currentColor;border-radius:999px;color:inherit;text-decoration:none;font:700 34px "Space Grotesk",sans-serif}
-.ghost:focus-visible{outline:4px solid var(--sun);outline-offset:6px}
+.ghost:focus-visible{outline:4px solid var(--sky);outline-offset:6px}
 /* words */
 /* big word: outline in the slide's text color (--fg), then fills with the accent. (currentColor would be the transparent fill.) */
 .w{font:600 230px/1 Fraunces,Georgia,serif;letter-spacing:-8px;color:transparent;-webkit-text-stroke:3px var(--fg)}
@@ -94,7 +94,7 @@ html,body{height:100%;background:#140E0A;overflow:hidden;overscroll-behavior:non
 /* cards */
 .cards{display:flex;flex-direction:column;gap:26px}
 .c{border-radius:40px;padding:36px 46px;background:rgba(255,255,255,.1)}
-.light .c,.t2 .c,.t3 .c,.t6 .c,.t7 .c{background:rgba(36,26,20,.08)}
+.light .c,.t2 .c,.t3 .c,.t6 .c,.t7 .c{background:rgba(11,27,58,.08)}
 .tag{font:700 30px "Space Grotesk",sans-serif;letter-spacing:4px;text-transform:uppercase;color:var(--hi);margin-bottom:12px}
 .ct{font:700 50px/1.1 "Space Grotesk",sans-serif;letter-spacing:-1px}
 .cx{font:italic 500 36px/1.3 Fraunces,Georgia,serif;margin-top:12px;opacity:.88}
@@ -121,20 +121,20 @@ html,body{height:100%;background:#140E0A;overflow:hidden;overscroll-behavior:non
 .rv{display:flex;align-items:center;justify-content:space-between;gap:24px}
 .row a{color:inherit;text-decoration:none;font:700 48px/1.1 "Space Grotesk",sans-serif;letter-spacing:-1px;word-break:break-word;min-width:0}
 /* Copy: ~44 CSS px tall on a phone */
-.cp{flex:none;min-height:124px;padding:0 44px;border-radius:999px;border:3px solid rgba(251,243,230,.5);background:none;color:inherit;font:700 32px "Space Grotesk",sans-serif;cursor:pointer}
+.cp{flex:none;min-height:124px;padding:0 44px;border-radius:999px;border:3px solid rgba(241,246,255,.5);background:none;color:inherit;font:700 32px "Space Grotesk",sans-serif;cursor:pointer}
 .cvb{margin-top:20px;text-decoration:none}
 .note{font:500 26px "Space Grotesk",sans-serif;opacity:.6}
-.row a:focus-visible,.cp:focus-visible,.cvb:focus-visible,.nav:focus-visible{outline:4px solid var(--sun);outline-offset:6px}
+.row a:focus-visible,.cp:focus-visible,.cvb:focus-visible,.nav:focus-visible{outline:4px solid var(--sky);outline-offset:6px}
 /* tap zones: under the slides (z 1), which let taps through to them */
 .nav{position:absolute;top:120px;bottom:0;border:0;background:none;cursor:pointer;z-index:1;outline:none}
 /* keyboard focus: raise above the slides so the outline is visible */
-.nav:focus-visible{outline:4px solid var(--sun);outline-offset:-8px;z-index:4}
+.nav:focus-visible{outline:4px solid var(--sky);outline-offset:-8px;z-index:4}
 #prev{left:0;width:35%}#next{right:0;width:65%}
 #stage.last #next{display:none}#stage.last #prev{width:6%}
 /* mobile CV icon (stage px): above tap zones, below bars; hidden on the contact slide and when rails show */
-.cvi{position:absolute;top:80px;right:48px;z-index:15;width:var(--cvi,124px);height:var(--cvi,124px);border-radius:50%;display:grid;place-items:center;background:var(--sun);color:var(--ink)}
+.cvi{position:absolute;top:80px;right:48px;z-index:15;width:var(--cvi,124px);height:var(--cvi,124px);border-radius:50%;display:grid;place-items:center;background:var(--sky);color:var(--ink)}
 .cvi svg{width:60px;height:60px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.cvi:focus-visible{outline:4px solid var(--sun);outline-offset:6px}
+.cvi:focus-visible{outline:4px solid var(--sky);outline-offset:6px}
 #stage.light .cvi{background:var(--ink);color:var(--paper)}
 #stage.last .cvi,body.rails .cvi{display:none}
 /* desktop rails (CSS px, outside the stage). --side = free width beside the stage, set in app.js */
@@ -142,38 +142,38 @@ html,body{height:100%;background:#140E0A;overflow:hidden;overscroll-behavior:non
 body.rails .rail{display:flex}
 #railL{left:calc(var(--side,0px)/2 - 90px)}
 #railR{right:calc(var(--side,0px)/2 - 90px)}
-.rbtn{width:56px;height:56px;border-radius:50%;border:2px solid rgba(251,243,230,.35);background:none;color:inherit;font:700 24px "Space Grotesk",system-ui,sans-serif;cursor:pointer}
-.rbtn:hover{border-color:var(--sun);color:var(--sun)}
-.rbtn:disabled{opacity:.3;cursor:default;border-color:rgba(251,243,230,.35);color:inherit}
+.rbtn{width:56px;height:56px;border-radius:50%;border:2px solid rgba(241,246,255,.35);background:none;color:inherit;font:700 24px "Space Grotesk",system-ui,sans-serif;cursor:pointer}
+.rbtn:hover{border-color:var(--sky);color:var(--sky)}
+.rbtn:disabled{opacity:.3;cursor:default;border-color:rgba(241,246,255,.35);color:inherit}
 .rcount{font-weight:700;font-size:18px;letter-spacing:2px}
 .rhint{opacity:.6;font-size:14px}
-.rcv{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;border-radius:999px;background:var(--sun);color:var(--ink);font-weight:700;text-decoration:none}
+.rcv{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;border-radius:999px;background:var(--sky);color:var(--ink);font-weight:700;text-decoration:none}
 .rcv:hover{background:var(--paper)}
 .rrow{display:flex;align-items:center;gap:6px}
-.rlink{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;color:inherit;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(251,243,230,.4)}
-.rlink:hover{color:var(--sun)}
-.rcopy{min-height:44px;min-width:44px;padding:0 12px;border-radius:999px;border:2px solid rgba(251,243,230,.35);background:none;color:inherit;font:500 14px "Space Grotesk",system-ui,sans-serif;cursor:pointer}
-.rcopy:hover{border-color:var(--sun);color:var(--sun)}
-.rail :focus-visible{outline:3px solid var(--sun);outline-offset:4px}
+.rlink{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;color:inherit;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(241,246,255,.4)}
+.rlink:hover{color:var(--sky)}
+.rcopy{min-height:44px;min-width:44px;padding:0 12px;border-radius:999px;border:2px solid rgba(241,246,255,.35);background:none;color:inherit;font:500 14px "Space Grotesk",system-ui,sans-serif;cursor:pointer}
+.rcopy:hover{border-color:var(--sky);color:var(--sky)}
+.rail :focus-visible{outline:3px solid var(--sky);outline-offset:4px}
 /* static fallback (CSS px): no JS or engine failure. html.failed is set by guard.js */
 html.failed,html.failed body{height:auto;overflow:auto}
 html.failed #stage,html.failed .rail,html.failed .rotate{display:none!important}
 html.failed #fallback{display:block!important}
 .fallback{max-width:560px;margin:0 auto;padding:56px 16px;color:var(--paper);font:500 17px/1.5 "Space Grotesk",system-ui,sans-serif}
 .fallback h1{font:600 clamp(40px,11vw,64px)/1 Fraunces,Georgia,serif;letter-spacing:-.02em}
-.fb-title{margin-top:8px;color:var(--sun);font-weight:700;letter-spacing:3px;text-transform:uppercase;font-size:14px}
+.fb-title{margin-top:8px;color:var(--sky);font-weight:700;letter-spacing:3px;text-transform:uppercase;font-size:14px}
 .fb-tag{margin-top:16px;font:italic 500 22px/1.3 Fraunces,Georgia,serif;opacity:.9}
-.fb-cv{display:inline-flex;align-items:center;min-height:48px;margin-top:28px;padding:12px 28px;border-radius:999px;background:var(--sun);color:var(--ink);font-weight:700;text-decoration:none}
+.fb-cv{display:inline-flex;align-items:center;min-height:48px;margin-top:28px;padding:12px 28px;border-radius:999px;background:var(--sky);color:var(--ink);font-weight:700;text-decoration:none}
 .fallback ul{list-style:none;padding:0;margin-top:32px}
-.fallback li{display:flex;flex-direction:column;padding:14px 0;border-top:1px solid rgba(251,243,230,.2)}
-.fallback li span{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--sun)}
+.fallback li{display:flex;flex-direction:column;padding:14px 0;border-top:1px solid rgba(241,246,255,.2)}
+.fallback li span{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--sky)}
 .fallback li a{color:inherit;font-size:20px;font-weight:700;word-break:break-word;min-height:44px;display:flex;align-items:center}
-.fallback a:focus-visible{outline:3px solid var(--sun);outline-offset:4px}
+.fallback a:focus-visible{outline:3px solid var(--sky);outline-offset:4px}
 /* rotate hint (CSS px) */
 .rotate{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:16px;background:var(--ink);color:var(--paper);text-align:center}
 .rotate[hidden]{display:none}
 .rotate p{font:600 26px/1.2 Fraunces,Georgia,serif}
-.rotate button{min-height:48px;padding:12px 28px;border:0;border-radius:999px;background:var(--sun);color:var(--ink);font:700 17px "Space Grotesk",system-ui,sans-serif;cursor:pointer}
+.rotate button{min-height:48px;padding:12px 28px;border:0;border-radius:999px;background:var(--sky);color:var(--ink);font:700 17px "Space Grotesk",system-ui,sans-serif;cursor:pointer}
 .rotate button:focus-visible{outline:3px solid var(--paper);outline-offset:4px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (prefers-reduced-motion:reduce){
