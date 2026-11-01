@@ -16,7 +16,7 @@
     {
       "type": "hero", "theme": "t1", "light": false, "d": 6,
       "kicker": "Hi, I’m Harel Adiv",
-      "lines": ["This is", "<em>not a</em>", "resume."],
+      "lines": ["This is", "<s>not</s> a", "resume."],
       "sub": "It’s my career in 9 slides: product, data and growth.",
       "cta": "Tap to explore →"
     },

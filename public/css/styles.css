@@ -84,6 +84,8 @@ html,body{height:100%;background:#050D1F;overflow:hidden;overscroll-behavior:non
 .big s{position:relative;text-decoration:none;color:color-mix(in srgb,currentColor 50%,transparent)}
 .big s::after{content:"";position:absolute;left:-3%;right:-3%;top:50%;height:.15em;margin-top:-.075em;border-radius:.08em;background:var(--strike);transform:rotate(-5deg);transform-origin:left center}
 :is(.on,.out) .big s::after{animation:strike .55s var(--e) 1s both}
+/* first slide: the struck word stays bright (accent colour), the line does the talking */
+.is-hero .big s{color:var(--hi)}
 @keyframes strike{from{transform:rotate(-5deg) scaleX(0)}}
 .slide.is-hero::before{width:600px;height:600px;right:-200px;top:-200px;background:var(--cobalt)}
 .slide.is-hero::after{width:340px;height:340px;border-radius:100% 0 0 0;left:auto;right:0;bottom:0;animation:none;background:var(--azure);opacity:1}
