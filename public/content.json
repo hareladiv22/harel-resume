@@ -42,9 +42,9 @@
       "type": "timeline", "theme": "t4", "light": false, "d": 11,
       "h": "The <em>path.</em>",
       "items": [
-        { "when": "2022 – 2023", "name": "Tic Tac Eilat Ltd", "text": "Senior Manager. Marketing, inventory, international procurement and logistics, plus hands-on support for daily operations." },
-        { "when": "2023 – 2025", "name": "Boostapp", "text": "Product Manager. Turned research and user feedback into KPI-driven UX improvements and ran go-to-market across teams." },
         { "when": "Oct 2025 – now", "name": "H.A Digital Marketing", "text": "Freelance. A portfolio of 10+ B2B and B2C clients, driving brand growth and ROI." },
+        { "when": "2023 – 2025", "name": "Boostapp", "text": "Product Manager. Turned research and user feedback into KPI-driven UX improvements and ran go-to-market across teams." },
+        { "when": "2022 – 2023", "name": "Tic Tac Eilat Ltd", "text": "Senior Manager. Marketing, inventory, international procurement and logistics, plus hands-on support for daily operations." },
         { "when": "2025 – 2028", "name": "BBA, Management Information Systems", "text": "The College of Academic Studies." }
       ]
     },
