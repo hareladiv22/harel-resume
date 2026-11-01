@@ -34,7 +34,7 @@ const $=q=>document.querySelector(q), stage=$("#stage"), reduce=matchMedia("(pre
 // Theme must be t1..t7 and type a known renderer; anything else is a content error (guard.js shows the fallback).
 $("#slides").innerHTML=S.map((s,i)=>{
  if(!R[s.type]||!/^t[1-7]$/.test(s.theme))throw new Error(`Slide ${i+1}: unknown type or theme`);
- return `<section class="slide ${s.theme}" role="group" aria-label="Slide ${i+1} of ${S.length}">${R[s.type](s)}<div class="brand">${esc(NAME)}</div></section>`;
+ return `<section class="slide ${s.theme} is-${s.type}" role="group" aria-label="Slide ${i+1} of ${S.length}">${R[s.type](s)}<div class="brand">${esc(NAME)}</div></section>`;
 }).join("");
 document.querySelectorAll("[data-s]").forEach(e=>e.style.setProperty("--i",e.dataset.s));
 const els=[...document.querySelectorAll(".slide")], LAST=S.length-1;
