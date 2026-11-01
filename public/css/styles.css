@@ -74,6 +74,8 @@ html,body{height:100%;background:#050D1F;overflow:hidden;overscroll-behavior:non
 /* first slide: big bold capitals, accent words upright in --hi, its own shapes */
 .is-hero .big{font:700 184px/.9 "Space Grotesk",system-ui,sans-serif;letter-spacing:-7px;text-transform:uppercase}
 .is-hero .big em{font-style:normal}
+/* the one-line hook under the name: bigger than a normal sub line */
+.is-hero .sub{font-size:60px;line-height:1.15;max-width:none}
 /* <s>struck</s> word: dimmed, with a bold tilted line that draws itself (one orange accent on the blue) */
 .big s{position:relative;text-decoration:none;color:color-mix(in srgb,currentColor 50%,transparent)}
 .big s::after{content:"";position:absolute;left:-3%;right:-3%;top:50%;height:.15em;margin-top:-.075em;border-radius:.08em;background:var(--strike);transform:rotate(-5deg);transform-origin:left center}
