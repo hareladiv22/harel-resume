@@ -17,7 +17,7 @@ const META=C.meta, NAME=META.name, S=C.slides;
 // data-s = stagger step; turned into the --i CSS variable after rendering (no inline style attributes, for the CSP).
 const R={
  // kicker = who (big line on top) + role badge from meta.title; then the headline
- hero:s=>`${s.kicker?`<div class="who rise" data-s="0"><p class="kick">${rich(s.kicker)}</p><span class="role">${esc(META.title)}</span></div>`:""}<h1 class="big">${s.lines.map((l,i)=>`<span class="ln"><b data-s="${i}">${rich(l)}</b></span>`).join("")}</h1><p class="sub rise" data-s="5">${rich(s.sub)}</p><span class="pill rise" data-s="7">${rich(s.cta)}</span><a class="ghost rise" data-s="8" href="${url(META.cv)}" download="${esc(META.cvFileName)}" target="_blank" rel="noopener">Download CV</a>`,
+ hero:s=>`${s.kicker?`<div class="who rise" data-s="0"><p class="kick">${rich(s.kicker)}</p><span class="role">${esc(META.title)}</span></div>`:""}<h1 class="big">${s.lines.map((l,i)=>`<span class="ln"><b data-s="${i}">${rich(l)}</b></span>`).join("")}</h1><p class="sub rise" data-s="5">${rich(s.sub)}</p><button class="pill rise" data-s="7" data-next>${rich(s.cta)}</button><a class="ghost rise" data-s="8" href="${url(META.cv)}" download="${esc(META.cvFileName)}" target="_blank" rel="noopener">Download CV</a>`,
  words:s=>s.items.map((o,i)=>`<div class="w" data-s="${i}">${rich(o.w)}</div><div class="wt rise" data-s="${i*3+1}">${rich(o.t)}</div>`).join(""),
  stats:s=>`<h2 class="hd rise">${rich(s.h)}</h2><div class="cards">${s.items.map((o,i)=>`<div class="c sc rise" data-s="${i+1}"><div class="num">${esc(o.pre)}<span data-n="${+o.n||0}" data-dec="${+o.dec||0}">0</span>${esc(o.suf)}</div><div class="sl">${rich(o.l)}${o.s?`<i>${rich(o.s)}</i>`:""}</div></div>`).join("")}</div>`,
  timeline:s=>`<h2 class="hd rise">${rich(s.h)}</h2><div class="tl">${s.items.map((o,i)=>`<div class="it rise" data-s="${i*3+2}"><div class="when">${rich(o.when)}</div><div class="nm">${rich(o.name)}</div><div class="tx">${rich(o.text)}</div></div>`).join("")}</div>`,
@@ -111,8 +111,13 @@ async function copy(text,btn){
  clearTimeout(btn.t);btn.t=setTimeout(()=>btn.textContent=btn.dataset.label,2000);
 }
 $("#rMailCopy").onclick=e=>copy(META.email,e.currentTarget);
-$("#slides").addEventListener("click",e=>{const b=e.target.closest(".cp");if(b)copy(b.dataset.copy,b)});
+$("#slides").addEventListener("click",e=>{
+ const b=e.target.closest(".cp");if(b)copy(b.dataset.copy,b);
+ if(e.target.closest("[data-next]"))step(1); // the first slide's "Tap to explore" button
+});
 $("#rPrev").onclick=()=>step(-1);$("#rNext").onclick=()=>step(1);
+// Mobile contact shortcut: straight to the contact slide.
+$("#contactIcon").onclick=()=>go(LAST);
 // Any click on the rails counts as a manual interaction (stops autoplay).
 document.querySelectorAll(".rail").forEach(r=>r.addEventListener("click",manual));
 function count(el){el.querySelectorAll("[data-n]").forEach(n=>{const to=+n.dataset.n,dec=+n.dataset.dec;if(reduce){n.textContent=to.toFixed(dec);return}
@@ -149,14 +154,15 @@ function show(n,dir=0){
  $("#live").textContent=`Slide ${n+1} of ${S.length}`;
  // replaceState (not pushState): Back leaves the site instead of stepping through slides.
  history.replaceState(null,"",location.pathname+location.search+"#"+(n+1));
- stage.classList.toggle("last",n===LAST);stage.classList.toggle("light",!!S[n].light);
+ stage.classList.toggle("last",n===LAST);stage.classList.toggle("light",!!S[n].light);stage.classList.toggle("first",n===0);
  $("#rCount").textContent=`${n+1} / ${S.length}`;$("#rPrev").disabled=n===0;$("#rNext").disabled=n===LAST;
  bars();arm(S[n].d*1000);
  holds.size?freeze():thaw();
 }
 // go(n): move to slide n right away (the transition plays on top). auto=true only from the autoplay timer.
 function go(n,auto){
- if(!auto)manual();
+ // Any move by the visitor: autoplay off, and the swipe hint is no longer needed.
+ if(!auto){manual();stage.classList.add("touched")}
  n=Math.max(0,Math.min(LAST,n));
  if(n!==cur)show(n,n>cur?1:-1);
 }

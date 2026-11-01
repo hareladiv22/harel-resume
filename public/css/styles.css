@@ -38,7 +38,8 @@ html,body{height:100%;background:#050D1F;overflow:hidden;overscroll-behavior:non
 @keyframes drift{to{translate:-40px 60px}}
 /* phones (#stage.phone, set in fit()): smaller shapes tucked into the corners so they stay clear of the text */
 #stage.phone .slide::before{width:440px;height:440px;right:-250px;top:110px}
-#stage.phone .slide::after{width:180px;height:180px;border-radius:36px;left:-120px;bottom:150px}
+/* phones: no rounded "tab" stuck to the left edge (it read as a glitch); the hero keeps its corner shape */
+#stage.phone .slide:not(.is-hero)::after{display:none}
 #stage.phone .w{-webkit-text-stroke-width:4px}
 /* --fg = the slide's text color (used for outlined text) */
 .slide{--fg:var(--paper)}
@@ -95,6 +96,9 @@ html,body{height:100%;background:#050D1F;overflow:hidden;overscroll-behavior:non
 .sub{font:italic 500 46px/1.25 Fraunces,Georgia,serif;opacity:.9;max-width:880px}
 .pill{align-self:flex-start;margin-top:30px;padding:26px 46px;border-radius:999px;background:var(--hi);color:var(--ink);font:700 38px "Space Grotesk",sans-serif}
 .t2 .pill,.t3 .pill,.t6 .pill{color:var(--paper);background:var(--ink)}
+/* the hero CTA is a real button */
+button.pill{border:0;cursor:pointer}
+button.pill:focus-visible{outline:4px solid var(--sky);outline-offset:6px}
 /* secondary button (hero CV): outlined pill, ~44 CSS px tall on a phone */
 .ghost{align-self:flex-start;display:inline-flex;align-items:center;min-height:124px;padding:0 46px;border:3px solid currentColor;border-radius:999px;color:inherit;text-decoration:none;font:700 34px "Space Grotesk",sans-serif}
 .ghost:focus-visible{outline:4px solid var(--sky);outline-offset:6px}
@@ -150,6 +154,14 @@ html,body{height:100%;background:#050D1F;overflow:hidden;overscroll-behavior:non
 .cvi:focus-visible{outline:4px solid var(--sky);outline-offset:6px}
 #stage.light .cvi{background:var(--ink);color:var(--paper)}
 #stage.last .cvi,body.rails .cvi{display:none}
+/* contact shortcut: same look as the CV icon, just to its left; jumps to the last slide */
+.cvi.mail{right:calc(48px + var(--cvi,124px) + 24px);border:0;padding:0;cursor:pointer}
+/* swipe hint (first slide, touch screens, until the first interaction): a chevron that nudges twice */
+.hint{position:absolute;right:20px;top:50%;z-index:5;width:110px;height:110px;margin-top:-55px;color:var(--paper);opacity:0;pointer-events:none;display:none}
+.hint svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+#stage.first:not(.touched) .hint{display:block;animation:nudge 1.3s var(--e) 2.2s 2 both}
+body.rails .hint{display:none!important}
+@keyframes nudge{0%{opacity:0;transform:none}25%{opacity:.85}55%{opacity:.85;transform:translateX(22px)}100%{opacity:0;transform:none}}
 /* desktop rails (CSS px, outside the stage). --side = free width beside the stage, set in app.js */
 .rail{position:fixed;top:50%;transform:translateY(-50%);width:180px;display:none;flex-direction:column;align-items:center;gap:18px;color:var(--paper);font:500 16px/1.3 "Space Grotesk",system-ui,sans-serif;text-align:center}
 body.rails .rail{display:flex}
