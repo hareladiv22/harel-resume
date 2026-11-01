@@ -73,7 +73,7 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 | Repo visibility | received | public |
 | Production URL | received | https://harel-resume.vercel.app |
 | PostHog project key | waiting | |
-| OG image approved | received | approved 2026-10-29 |
+| OG image approved | received | approved 2026-10-29; blue version published with redesign 2026-11-01 (LinkedIn re-scrape needed) |
 | Hobbies (optional) | received | Card approved: tag "Hobbies", title "Basketball & surfing" (no text) |
 | Tools approved (fontsource, qrcode, playwright) | not needed so far | fonts downloaded directly; images via installed Chrome; qrcode deferred with P3.4 |
 
@@ -130,3 +130,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-11-01 First slide v3 (Harel: v2 still unclear, hook buried): optional hero 'kicker' field (renderer, validator max 40, README) = 'Hi, I’m Harel Adiv · Product Manager'; headline 'This is / <em>not a</em> / resume.' at 200px; sub 'It’s my career in 9 slides: product, data and growth.'; cta back to 'Tap to explore →'. Hero circle moved to the top corner so the kicker stays clear. Checked 390/360/1440.
 - 2026-11-01 First slide v4 (Harel: kicker too small, unclear UX): kicker 'Hi, I’m Harel Adiv' now 96px Fraunces, role badge from meta.title (outlined pill), headline down to 168px. Reading order: name, role, hook, actions.
 - 2026-11-01 Copy change (Harel): headline line 2 '<s>not</s> a' = animated orange strike across NOT (struck word stays in accent colour on the hero). Reads 'This is ~~not~~ a resume.'
+- 2026-11-01 Published: Harel approved; redesign (incl. phase-6 commits) fast-forwarded to main (4869388), deploy green. Production: all files 200, /nope 404, click-through desktop + mobile with zero console errors. Open: Harel re-scrapes LinkedIn preview; P6.1 device pass; P6.5 launch; official Lighthouse scores; QR + PostHog deferred.
