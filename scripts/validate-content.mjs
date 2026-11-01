@@ -36,18 +36,18 @@ try {
 }
 
 // ---------- helpers ----------
-const plainLen = s => [...s.replace(/<\/?em>|<br>/g, '')].length;   // tags don't count toward limits
+const plainLen = s => [...s.replace(/<\/?(?:em|s)>|<br>/g, '')].length;   // tags don't count toward limits
 const excerpt = s => (typeof s === 'string' ? `"${s.length > 60 ? s.slice(0, 57) + '…' : s}"` : JSON.stringify(s));
 const isObj = v => v && typeof v === 'object' && !Array.isArray(v);
 
-// Text field: required/optional, max length, and only <em>…</em> / <br> as markup (rich) or none (plain).
+// Text field: required/optional, max length, and only <em>…</em>, <s>…</s> (struck out) / <br> as markup (rich) or none (plain).
 function text(obj, key, where, { max, optional = false, rich = true } = {}) {
   const v = obj[key], p = `${where}.${key}`;
   if (v === undefined || v === '') { if (!optional) fail(p, 'missing (required)'); return; }
   if (typeof v !== 'string') return fail(p, 'must be text in "quotes"', v);
-  const rest = rich ? v.replace(/<\/?em>|<br>/g, '') : v;
-  if (rest.includes('<') || rest.includes('>')) fail(p, rich ? 'only <em>…</em> and <br> are allowed as markup' : 'no markup allowed here', v);
-  if (rich && (v.match(/<em>/g) || []).length !== (v.match(/<\/em>/g) || []).length) fail(p, '<em> and </em> must come in pairs', v);
+  const rest = rich ? v.replace(/<\/?(?:em|s)>|<br>/g, '') : v;
+  if (rest.includes('<') || rest.includes('>')) fail(p, rich ? 'only <em>…</em>, <s>…</s> and <br> are allowed as markup' : 'no markup allowed here', v);
+  for (const tag of ['em', 's']) if (rich && (v.match(new RegExp(`<${tag}>`, 'g')) || []).length !== (v.match(new RegExp(`</${tag}>`, 'g')) || []).length) fail(p, `<${tag}> and </${tag}> must come in pairs`, v);
   if (max && plainLen(v) > max) fail(p, `too long (${plainLen(v)} > ${max} characters)`, v);
 }
 function list(obj, key, where, min, max) {

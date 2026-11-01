@@ -3,7 +3,7 @@
 @font-face{font-family:Fraunces;font-style:italic;font-weight:500;font-display:swap;src:url(/fonts/fraunces-latin-500-italic.woff2) format("woff2")}
 @font-face{font-family:"Space Grotesk";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/space-grotesk-latin-500-normal.woff2) format("woff2")}
 @font-face{font-family:"Space Grotesk";font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/space-grotesk-latin-700-normal.woff2) format("woff2")}
-:root{--ink:#0B1B3A;--cobalt:#1F4FD8;--blue-ink:#1A3D9E;--azure:#5AAEF2;--sky:#8CC4FF;--paper:#F1F6FF;--pale:#CFE5FF;--e:cubic-bezier(.16,1,.3,1);--pop:cubic-bezier(.34,1.56,.64,1)}
+:root{--ink:#0B1B3A;--cobalt:#1F4FD8;--blue-ink:#1A3D9E;--azure:#5AAEF2;--sky:#8CC4FF;--paper:#F1F6FF;--pale:#CFE5FF;--strike:#FF7A45;--e:cubic-bezier(.16,1,.3,1);--pop:cubic-bezier(.34,1.56,.64,1)}
 /* no grey/blue box flashing over the tap zones on mobile (keyboard focus still shows via :focus-visible) */
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;background:#050D1F;overflow:hidden;overscroll-behavior:none}
@@ -74,6 +74,11 @@ html,body{height:100%;background:#050D1F;overflow:hidden;overscroll-behavior:non
 /* first slide: big bold capitals, accent words upright in --hi, its own shapes */
 .is-hero .big{font:700 184px/.9 "Space Grotesk",system-ui,sans-serif;letter-spacing:-7px;text-transform:uppercase}
 .is-hero .big em{font-style:normal}
+/* <s>struck</s> word: dimmed, with a bold tilted line that draws itself (one orange accent on the blue) */
+.big s{position:relative;text-decoration:none;color:color-mix(in srgb,currentColor 50%,transparent)}
+.big s::after{content:"";position:absolute;left:-3%;right:-3%;top:50%;height:.15em;margin-top:-.075em;border-radius:.08em;background:var(--strike);transform:rotate(-5deg);transform-origin:left center}
+:is(.on,.out) .big s::after{animation:strike .55s var(--e) 1s both}
+@keyframes strike{from{transform:rotate(-5deg) scaleX(0)}}
 .slide.is-hero::before{width:600px;height:600px;right:-230px;top:150px;background:var(--cobalt)}
 .slide.is-hero::after{width:340px;height:340px;border-radius:100% 0 0 0;left:auto;right:0;bottom:0;animation:none;background:var(--azure);opacity:1}
 #stage.phone .slide.is-hero::before{width:460px;height:460px;right:-220px;top:110px}

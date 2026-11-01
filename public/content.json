@@ -15,8 +15,8 @@
   "slides": [
     {
       "type": "hero", "theme": "t1", "light": false, "d": 6,
-      "lines": ["Hi, I’m", "<em>Harel</em>", "<em>Adiv.</em>"],
-      "sub": "Product Manager. Agile, data-driven, and hands-on with AI.",
+      "lines": ["Less", "<s>reading.</s>", "<em>More</em>", "<em>swiping.</em>"],
+      "sub": "Hi, I’m Harel Adiv. Product Manager, data-driven and hands-on with AI.",
       "cta": "Tap to explore →"
     },
     {

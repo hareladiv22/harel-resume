@@ -4,9 +4,9 @@
    To change text, edit public/content.json (not this file).
    ============================================================ */
 /* ===== ENGINE (no need to edit) ===== */
-// Safe rendering: every content string is escaped. rich() then re-allows only <em>, </em> and <br>.
+// Safe rendering: every content string is escaped. rich() then re-allows only <em>, <s> (struck out) and <br>.
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
-const rich=v=>esc(v).replace(/&lt;(\/?em|br)&gt;/g,"<$1>");
+const rich=v=>esc(v).replace(/&lt;(\/?(?:em|s)|br)&gt;/g,"<$1>");
 // Links: only https:, mailto:, tel: or a path on this site; anything else becomes a dead link.
 const safeUrl=u=>/^(https:|mailto:|tel:|\/(?!\/))/.test(u)?u:"#", url=u=>esc(safeUrl(u));
 
