@@ -76,7 +76,7 @@ check('cvFileName', v => /^[\w.-]+\.pdf$/i.test(v), 'must be a file name ending 
 
 // ---------- 3. slides ----------
 const TYPES = {
-  hero: ['lines', 'sub', 'cta'],
+  hero: ['kicker', 'lines', 'sub', 'cta'],
   words: ['items'],
   stats: ['h', 'items'],
   timeline: ['h', 'items'],
@@ -96,7 +96,7 @@ S.forEach((s, i) => {
   switch (s.type) {
     case 'hero':
       list(s, 'lines', w, 2, 4).forEach((l, j) => text(s.lines, j, `${w}.lines`, { max: 12 }));
-      text(s, 'sub', w, { max: 90 }); text(s, 'cta', w, { max: 24 });
+      text(s, 'kicker', w, { max: 40, optional: true }); text(s, 'sub', w, { max: 90 }); text(s, 'cta', w, { max: 24 });
       break;
     case 'words':
       list(s, 'items', w, 3, 3).forEach((o, j) => { const p = `${w}.items[${j}]`; if (!isObj(o)) return fail(p, 'must be { … }'); onlyKeys(o, ['w', 't'], p); text(o, 'w', p, { max: 6 }); text(o, 't', p, { max: 60 }); });

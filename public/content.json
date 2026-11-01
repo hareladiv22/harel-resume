@@ -15,9 +15,10 @@
   "slides": [
     {
       "type": "hero", "theme": "t1", "light": false, "d": 6,
-      "lines": ["Hi, I’m", "<em>Harel</em>", "<em>Adiv.</em>"],
-      "sub": "Product Manager. And this is not a resume.",
-      "cta": "My career in 9 slides →"
+      "kicker": "Hi, I’m Harel Adiv · Product Manager",
+      "lines": ["This is", "<em>not a</em>", "resume."],
+      "sub": "It’s my career in 9 slides: product, data and growth.",
+      "cta": "Tap to explore →"
     },
     {
       "type": "words", "theme": "t2", "light": true, "d": 10,
