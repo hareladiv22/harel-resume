@@ -17,7 +17,7 @@
       "type": "hero", "theme": "t1", "light": false, "d": 6,
       "kicker": "Hi, I’m Harel Adiv",
       "lines": ["This is", "<s>not</s> a", "resume."],
-      "sub": "It’s my career in 9 slides: product, data and growth.",
+      "sub": "It’s my career in 8 slides: product, data and growth.",
       "cta": "Tap to explore →"
     },
     {
@@ -26,16 +26,6 @@
         { "w": "Think", "t": "Market research and user feedback come first." },
         { "w": "Build", "t": "Roadmaps shaped by data, shipped with Agile." },
         { "w": "Grow", "t": "Go-to-market, partnerships and ROI." }
-      ]
-    },
-    {
-      "type": "stats", "theme": "t3", "light": true, "d": 8,
-      "h": "By the<br><em>numbers.</em>",
-      "items": [
-        { "pre": "+", "n": 30, "dec": 0, "suf": "%", "l": "New customer acquisition, quarter over quarter", "s": "Boostapp · B2B and B2C" },
-        { "pre": "+", "n": 25, "dec": 0, "suf": "%", "l": "User satisfaction", "s": "Boostapp · data-driven product pivots" },
-        { "pre": "", "n": 10, "dec": 0, "suf": "+", "l": "B2B and B2C clients managed", "s": "Freelance digital marketing" },
-        { "pre": "", "n": 4, "dec": 0, "suf": "+", "l": "Years across product, marketing and operations", "s": "2022 – now" }
       ]
     },
     {
