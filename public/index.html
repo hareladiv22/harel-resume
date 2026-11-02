@@ -34,8 +34,9 @@
 <main id="stage" aria-label="Interactive resume">
   <div class="bars" id="bars" aria-hidden="true"></div>
   <div id="slides"></div>
-  <button class="nav" id="prev" aria-label="Previous slide"></button>
-  <button class="nav" id="next" aria-label="Next slide"></button>
+  <!-- Invisible tap zones; tabindex -1 keeps them out of the Tab order (arrow keys do the same job). -->
+  <button class="nav" id="prev" aria-label="Previous slide" tabindex="-1"></button>
+  <button class="nav" id="next" aria-label="Next slide" tabindex="-1"></button>
   <button class="cvi mail" id="contactIcon" aria-label="Contact details" title="Contact"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></button>
   <span class="hint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></span>
   <a class="cvi" id="cvIcon" aria-label="Download CV" title="Download CV"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6m-3-3 3 3 3-3"/></svg></a>

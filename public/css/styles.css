@@ -39,7 +39,7 @@ html,body{height:100%;background:#050D1F;overflow:hidden;overscroll-behavior:non
 /* phones (#stage.phone, set in fit()): smaller shapes tucked into the corners so they stay clear of the text */
 #stage.phone .slide::before{width:440px;height:440px;right:-250px;top:110px}
 /* phones: no rounded "tab" stuck to the left edge (it read as a glitch); the hero keeps its corner shape */
-#stage.phone .slide:not(.is-hero)::after{display:none}
+#stage .slide:not(.is-hero)::after{display:none}
 #stage.phone .w{-webkit-text-stroke-width:4px}
 /* --fg = the slide's text color (used for outlined text) */
 .slide{--fg:var(--paper)}
@@ -141,11 +141,12 @@ button.pill:focus-visible{outline:4px solid var(--sky);outline-offset:6px}
 .cp{flex:none;min-height:124px;padding:0 44px;border-radius:999px;border:3px solid rgba(241,246,255,.5);background:none;color:inherit;font:700 32px "Space Grotesk",sans-serif;cursor:pointer}
 .cvb{margin-top:20px;text-decoration:none}
 .note{font:500 26px "Space Grotesk",sans-serif;opacity:.6}
-.row a:focus-visible,.cp:focus-visible,.cvb:focus-visible,.nav:focus-visible{outline:4px solid var(--sky);outline-offset:6px}
+.row a:focus-visible,.cp:focus-visible,.cvb:focus-visible{outline:4px solid var(--sky);outline-offset:6px}
 /* tap zones: under the slides (z 1), which let taps through to them */
 .nav{position:absolute;top:120px;bottom:0;border:0;background:none;cursor:pointer;z-index:1;outline:none}
-/* keyboard focus: raise above the slides so the outline is visible */
-.nav:focus-visible{outline:4px solid var(--sky);outline-offset:-8px;z-index:4}
+/* the tap zones are invisible on purpose: never draw a focus frame on them (keyboard users have the
+   arrow keys and the rail buttons; the zones are out of the Tab order, see index.html) */
+.nav:focus,.nav:focus-visible{outline:none}
 #prev{left:0;width:35%}#next{right:0;width:65%}
 #stage.last #next{display:none}#stage.last #prev{width:6%}
 /* mobile CV icon (stage px): above tap zones, below bars; hidden on the contact slide and when rails show */
