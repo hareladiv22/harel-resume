@@ -22,10 +22,9 @@ html,body{height:100%;background:#050D1F;overflow:hidden;overscroll-behavior:non
    from the left going back, --dir -1) over the old one, which drifts slightly the other way. */
 .slide.on{z-index:3}
 .slide.out{z-index:2}
-.slide.enter{animation:enter .6s var(--e) both}
-.slide.out{animation:leave .6s var(--e) both}
-@keyframes enter{from{opacity:0;transform:translateX(calc(var(--dir,1)*120px))}}
-@keyframes leave{to{transform:translateX(calc(var(--dir,1)*-80px))}}
+.slide.enter{animation:enter .55s var(--e) both}
+.slide.enter,.slide.out{will-change:transform,opacity} /* own GPU layer while moving: smoother on phones */
+@keyframes enter{from{opacity:0;transform:translateX(calc(var(--dir,1)*90px))}}
 .slide::before{content:"";position:absolute;width:640px;height:640px;border-radius:50%;background:var(--a);right:-260px;top:180px;animation:drift 7s ease-in-out infinite alternate}
 .slide::after{content:"";position:absolute;width:260px;height:260px;border-radius:44px;background:var(--a);opacity:.5;left:-90px;bottom:260px;animation:drift 5s ease-in-out infinite alternate-reverse}
 /* Slide content above the decorative shapes; taps pass through except on links and buttons. */
@@ -51,7 +50,7 @@ html,body{height:100%;background:#050D1F;overflow:hidden;overscroll-behavior:non
 .t6{background:var(--paper);--a:var(--cobalt);--hi:var(--blue-ink);color:var(--ink);--fg:var(--ink)}
 .t7{background:var(--azure);--a:var(--paper);--hi:var(--ink);color:var(--ink);--fg:var(--ink)}
 .brand{position:absolute;bottom:70px;left:72px;font:600 40px Fraunces,Georgia,serif;z-index:2}
-.bars{position:absolute;top:48px;left:48px;right:48px;display:flex;gap:10px;z-index:20;color:var(--paper)}
+.bars{position:absolute;top:48px;left:48px;right:48px;display:flex;gap:10px;z-index:20;color:var(--paper);transition:color .5s}
 .bars.light{color:var(--ink)}
 .bars i{flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.28);overflow:hidden;cursor:pointer}
 .bars.light i{background:rgba(11,27,58,.18)}
@@ -64,7 +63,8 @@ html,body{height:100%;background:#050D1F;overflow:hidden;overscroll-behavior:non
 .bars.still i.done b{opacity:.5}
 /* motion */
 .rise{opacity:0}
-:is(.on,.out) .rise{animation:rise .85s var(--e) forwards;animation-delay:calc(var(--i,0)*.14s + .15s)}
+/* content arrives with the slide: short stagger, so a slide is never empty for long */
+:is(.on,.out) .rise{animation:rise .7s var(--e) forwards;animation-delay:calc(var(--i,0)*.06s + .05s)}
 @keyframes rise{from{opacity:0;transform:translateY(48px) scale(.97)}to{opacity:1;transform:none}}
 .ln{display:block;overflow:hidden;padding-bottom:.1em}
 .ln b{display:inline-block;transform:translateY(115%);font-weight:inherit}
@@ -150,7 +150,7 @@ button.pill:focus-visible{outline:4px solid var(--sky);outline-offset:6px}
 #prev{left:0;width:35%}#next{right:0;width:65%}
 #stage.last #next{display:none}#stage.last #prev{width:6%}
 /* mobile CV icon (stage px): above tap zones, below bars; hidden on the contact slide and when rails show */
-.cvi{position:absolute;top:80px;right:48px;z-index:15;width:var(--cvi,124px);height:var(--cvi,124px);border-radius:50%;display:grid;place-items:center;background:var(--sky);color:var(--ink)}
+.cvi{position:absolute;top:80px;right:48px;z-index:15;width:var(--cvi,124px);height:var(--cvi,124px);border-radius:50%;display:grid;place-items:center;background:var(--sky);color:var(--ink);transition:background-color .5s,color .5s}
 .cvi svg{width:60px;height:60px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .cvi:focus-visible{outline:4px solid var(--sky);outline-offset:6px}
 #stage.light .cvi{background:var(--ink);color:var(--paper)}

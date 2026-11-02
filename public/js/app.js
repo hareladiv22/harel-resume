@@ -146,10 +146,17 @@ function show(n,dir=0){
  const prev=cur>=0?els[cur]:null;cur=n;
  // The visitor's own pauses (hold, Space) end on a new slide; system ones (hidden tab, rotate hint) stay.
  holds.delete("hold");holds.delete("space");
- els.forEach(e=>{if(e!==prev)e.classList.remove("out");e.classList.remove("on","enter");e.inert=true});
- // Soft transition: the old slide stays underneath ("out") while the new one fades and slides in over it.
- if(prev&&dir&&!reduce){prev.style.setProperty("--dir",dir);prev.classList.add("out");clearTimeout(prev.outT);prev.outT=setTimeout(()=>prev.classList.remove("out"),650)}
- const e=els[n];e.inert=false;e.style.setProperty("--dir",dir||1);void e.offsetWidth;
+ // Soft transition: the old slide stays where it is, underneath ("out"), while the new one fades and
+ // slides in over it. Outgoing slides keep whatever they were doing (even a half-finished entrance) and
+ // leave on their own timer, so fast taps never make anything jump or flash the dark page background.
+ els.forEach(e=>{e.classList.remove("on");e.inert=true});
+ if(prev&&dir&&!reduce){
+  // the most recent outgoing slide sits on top of older ones (z 2 vs 1), still under the new slide (z 3)
+  els.forEach(o=>{if(o.classList.contains("out"))o.style.zIndex=1});
+  prev.style.zIndex=2;prev.classList.add("out");clearTimeout(prev.outT);
+  prev.outT=setTimeout(()=>{prev.classList.remove("out","enter");prev.style.zIndex=""},700);
+ }
+ const e=els[n];clearTimeout(e.outT);e.classList.remove("out","enter");e.style.zIndex="";e.inert=false;e.style.setProperty("--dir",dir||1);void e.offsetWidth;
  e.classList.add("on");if(dir&&!reduce)e.classList.add("enter");fitText(e,n);count(e);
  $("#live").textContent=`Slide ${n+1} of ${S.length}`;
  // replaceState (not pushState): Back leaves the site instead of stepping through slides.
