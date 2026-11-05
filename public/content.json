@@ -23,9 +23,9 @@
     {
       "type": "words", "theme": "t2", "light": true, "d": 10,
       "items": [
-        { "w": "Think", "t": "Market research and user feedback come first." },
-        { "w": "Build", "t": "Roadmaps shaped by data, shipped with Agile." },
-        { "w": "Grow", "t": "Go-to-market, partnerships and ROI." }
+        { "w": "Ask", "t": "Talk to users. Read the market. Find the real problem." },
+        { "w": "Deliver", "t": "Small, measurable releases, built with Agile teams." },
+        { "w": "Learn", "t": "Let the data decide the next round." }
       ]
     },
     {
@@ -44,7 +44,7 @@
       "items": [
         { "tag": "Boostapp", "title": "Growing new customers", "text": "Turned market research and direct user feedback into KPI driven UX improvements for B2B and B2C.", "big": "+30% QoQ" },
         { "tag": "Boostapp", "title": "Raising user satisfaction", "text": "Pivoted products based on data-driven insights and kept the roadmap tight with Agile.", "big": "+25%" },
-        { "tag": "Freelance", "title": "Serving many clients at once", "text": "Managing a diverse B2B and B2C portfolio, focused on brand growth and ROI.", "big": "10+ clients" }
+        { "tag": "Freelance", "title": "Having a portfolio of 10+ customers", "text": "Managing a diverse B2B and B2C portfolio, focused on brand growth and ROI.", "big": "Avarege 310% ROI" }
       ]
     },
     {
@@ -61,19 +61,20 @@
       "type": "cards", "theme": "t1", "light": false, "d": 10,
       "h": "What I <em>bring.</em>",
       "items": [
+        { "tag": "AI & code", "title": "• Prompt Engineering, LLMs (Claude Code, GPT, Cursor), Data Synthesis, AI-Driven Wireframing/Mockups.
+", "text": "Hands on with AI tools and code" }
         { "tag": "Product", "title": "Roadmaps · Agile · Scrum · PMO", "text": "Boostapp, Product Manager" },
         { "tag": "Data", "title": "SQL · Excel · GA4 & GTM", "text": "KPI-driven decisions" },
         { "tag": "Growth", "title": "Google Ads · PPC & SEO · CSM", "text": "Freelance, 10+ clients" },
-        { "tag": "AI & code", "title": "Claude · GPT · Python · HTML, CSS, JS", "text": "Hands on with AI tools and front end code" }
       ]
     },
     {
       "type": "cards", "theme": "t7", "light": true, "d": 8,
       "h": "Off the clock,<br><em>still curious.</em>",
       "items": [
+        { "tag": "projects", "title": "Married.com - Coming soon" }
         { "tag": "Volunteering", "title": "Teaching teens to code", "text": "Course instructor at Tapuach Organization: web development (HTML, CSS, JavaScript) plus leadership development." },
-        { "tag": "Languages", "title": "Hebrew & English", "text": "Hebrew native, English fluent." },
-        { "tag": "projacts", "title": "Wedi - Coming soon" }
+        { "tag": "Languages", "title": "Hebrew & English", "text": "Hebrew native, English fluent." }
       ]
     },
     {
