@@ -99,7 +99,7 @@ S.forEach((s, i) => {
       text(s, 'kicker', w, { max: 40, optional: true }); text(s, 'sub', w, { max: 90 }); text(s, 'cta', w, { max: 24 });
       break;
     case 'words':
-      list(s, 'items', w, 3, 3).forEach((o, j) => { const p = `${w}.items[${j}]`; if (!isObj(o)) return fail(p, 'must be { … }'); onlyKeys(o, ['w', 't'], p); text(o, 'w', p, { max: 6 }); text(o, 't', p, { max: 60 }); });
+      list(s, 'items', w, 3, 3).forEach((o, j) => { const p = `${w}.items[${j}]`; if (!isObj(o)) return fail(p, 'must be { … }'); onlyKeys(o, ['w', 't'], p); text(o, 'w', p, { max: 7 }); text(o, 't', p, { max: 60 }); });
       break;
     case 'stats':
       list(s, 'items', w, 3, 4).forEach((o, j) => {
