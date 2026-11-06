@@ -58,25 +58,13 @@
       ]
     },
     {
-      "type": "map", "theme": "t1", "light": false, "d": 12,
+      "type": "cards", "theme": "t1", "light": false, "d": 10,
       "h": "What I <em>bring.</em>",
-      "sub": "Every skill, and where it comes from.",
-      "groups": [
-        { "tag": "Ask", "items": [
-          { "title": "User research & market insight", "from": "Boostapp · market research & user feedback" },
-          { "title": "Data analysis", "from": "SQL · Excel · GA4 & GTM" },
-          { "title": "Customer success", "from": "CSM · B2B and B2C users" }
-        ] },
-        { "tag": "Deliver", "items": [
-          { "title": "Roadmaps & Agile delivery", "from": "Boostapp · Scrum · PMO" },
-          { "title": "Go-to-market & launches", "from": "Boostapp · dev, design, marketing, sales" },
-          { "title": "AI-assisted prototyping", "from": "Claude Code · GPT · Cursor" }
-        ] },
-        { "tag": "Learn", "items": [
-          { "title": "Data-driven product pivots", "from": "Boostapp · KPI-driven decisions" },
-          { "title": "Performance marketing", "from": "Google Ads · PPC & SEO" },
-          { "title": "Growth & ROI", "from": "Freelance · 10+ B2B and B2C clients" }
-        ] }
+      "items": [
+        { "tag": "AI & code", "title": "Prompt engineering & LLMs", "text": "Claude Code, GPT, Cursor, data synthesis and AI-driven wireframes and mockups." },
+        { "tag": "Product", "title": "Roadmaps · Agile · Scrum · PMO", "text": "Boostapp, Product Manager" },
+        { "tag": "Data", "title": "SQL · Excel · GA4 & GTM", "text": "KPI-driven decisions" },
+        { "tag": "Growth", "title": "Google Ads · PPC & SEO · CSM", "text": "Freelance, 10+ clients" }
       ]
     },
     {
