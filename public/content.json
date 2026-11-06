@@ -43,7 +43,7 @@
       "h": "Three <em>moments.</em>",
       "items": [
         { "tag": "Boostapp", "title": "Growing new customers", "text": "Turned market research and direct user feedback into KPI driven UX improvements for B2B and B2C.", "big": "+30% QoQ" },
-        { "tag": "Boostapp", "title": "Raising user satisfaction", "text": "Pivoted products based on data-driven insights and kept the roadmap tight with Agile.", "big": "+25%" },
+        { "tag": "Boostapp", "title": "Raising user satisfaction", "text": "Pivoted products based on data-driven insights and kept the roadmap tight using Agile.", "big": "+25%" },
         { "tag": "Freelance", "title": "Having a portfolio of 10+ customers", "text": "Managing a diverse B2B and B2C portfolio, focused on brand growth and ROI.", "big": "310% avg ROI" }
       ]
     },
