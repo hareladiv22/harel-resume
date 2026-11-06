@@ -24,7 +24,7 @@
       "type": "words", "theme": "t2", "light": true, "d": 10,
       "items": [
         { "w": "Ask", "t": "Talk to users. Read the market. Find the real problem." },
-        { "w": "Deliver", "t": "Small, measurable releases, built with Agile teams." },
+        { "w": "Deliver", "t": "Small, measurable releases, Delivered with Agile teams." },
         { "w": "Learn", "t": "Let the data decide the next round." }
       ]
     },
