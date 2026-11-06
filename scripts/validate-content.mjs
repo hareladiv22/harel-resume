@@ -81,6 +81,7 @@ const TYPES = {
   stats: ['h', 'items'],
   timeline: ['h', 'items'],
   cards: ['h', 'items'],
+  map: ['h', 'sub', 'groups'],
   contact: ['h', 'sub', 'privacyNote'],
 };
 const S = Array.isArray(C.slides) ? C.slides : (fail('slides', 'missing list [ … ]'), []);
@@ -116,6 +117,14 @@ S.forEach((s, i) => {
       break;
     case 'cards':
       list(s, 'items', w, 2, 4).forEach((o, j) => { const p = `${w}.items[${j}]`; if (!isObj(o)) return fail(p, 'must be { … }'); onlyKeys(o, ['tag', 'title', 'text', 'big'], p); text(o, 'tag', p, { max: 28 }); text(o, 'title', p, { max: 40 }); text(o, 'text', p, { max: 120, optional: true }); text(o, 'big', p, { max: 12, optional: true }); });
+      break;
+    case 'map':
+      text(s, 'sub', w, { max: 60, optional: true });
+      list(s, 'groups', w, 2, 4).forEach((g, j) => {
+        const p = `${w}.groups[${j}]`; if (!isObj(g)) return fail(p, 'must be { … }');
+        onlyKeys(g, ['tag', 'items'], p); text(g, 'tag', p, { max: 16 });
+        list(g, 'items', p, 1, 4).forEach((o, k) => { const q = `${p}.items[${k}]`; if (!isObj(o)) return fail(q, 'must be { … }'); onlyKeys(o, ['title', 'from'], q); text(o, 'title', q, { max: 36 }); text(o, 'from', q, { max: 50 }); });
+      });
       break;
     case 'contact':
       // privacyNote is optional: removed while there is no analytics (Harel, 2026-10-31)
