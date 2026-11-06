@@ -144,3 +144,4 @@ Agent: tick a task when its acceptance criteria pass. Add one line under "Log" p
 - 2026-11-06 Harel approved slide 6 copy as drafted (CSM = Customer Success, confirmed). Published capability-map (4f64f1d); deploy green, production click-through clean.
 - 2026-11-06 Domain change to harelwrapped.vercel.app cancelled by Harel before anything was published; branch deleted. Site stays at https://harel-resume.vercel.app.
 - 2026-11-06 Harel asked to restore slide 6 to the card version ('What I bring', 4 cards) exactly as before the capability map; content.json now identical to f0e3462. The 'map' slide type stays supported in the engine/validator for later use.
+- 2026-11-06 Content (Harel): timeline order now BBA first, then H.A Digital Marketing, Boostapp, Tic Tac. (Also live: Harel's own edit 'Married.co.il - Coming soon'.)
