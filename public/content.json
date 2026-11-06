@@ -71,7 +71,7 @@
       "type": "cards", "theme": "t7", "light": true, "d": 8,
       "h": "Off the clock,<br><em>still curious.</em>",
       "items": [
-        { "tag": "projects", "title": "Married.com - Coming soon" },
+        { "tag": "projects", "title": "Married.co.il - Coming soon" },
         { "tag": "Volunteering", "title": "Teaching teens to code", "text": "Course instructor at Tapuach Organization: web development (HTML, CSS, JavaScript) plus leadership development." },
         { "tag": "Languages", "title": "Hebrew & English", "text": "Hebrew native, English fluent." }
       ]
